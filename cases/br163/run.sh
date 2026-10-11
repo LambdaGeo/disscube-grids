@@ -8,6 +8,6 @@ case "${1:-all}" in
   run)      disscube validate "$HERE/$P.toml"
             mkdir -p "$HERE/data"
             disscube run "$HERE/$P.toml" --workspace "$HERE/data/$P" --output "$HERE/data/$P.tif" ;;
-  plot)     python "$HERE/../common/plot_cube.py" "$HERE/data/$P.tif" "$HERE/images/$P" ;;
+  plot)     python "$HERE/../../common/plot_cube.py" "$HERE/data/$P.tif" "$HERE/images/$P" ;;
   all)      "$0" run "$P"; "$0" plot "$P" ;;
 esac

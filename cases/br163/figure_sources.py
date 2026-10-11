@@ -1,7 +1,7 @@
 """Figure of the three open sources on the same 500 m grid (BR-163, Pará).
 
     python figure_sources.py [--bdc data/bdc_mapbiomas.tif] [--mapbiomas data/bdc_mapbiomas.tif]
-                             [--prodes data/prodes.tif] [--out ../docs/br163_sources.png]
+                             [--prodes data/prodes.tif] [--out ../../docs/figures/br163_sources.png]
 
 Top row: Landsat NDVI from the Brazil Data Cube (dry season 2020), the forest share from MapBiomas
 and from PRODES at the end of 2024. Bottom row: pasture (MapBiomas) and deforested share (PRODES) in
@@ -55,7 +55,7 @@ def main():
     p.add_argument("--bdc", default=str(HERE / "data/bdc_mapbiomas.tif"))
     p.add_argument("--mapbiomas", default=str(HERE / "data/bdc_mapbiomas.tif"))
     p.add_argument("--prodes", default=str(HERE / "data/prodes.tif"))
-    p.add_argument("--out", default=str(HERE.parent / "docs/br163_sources.png"))
+    p.add_argument("--out", default=str(HERE.parent.parent / "docs/figures/br163_sources.png"))
     a = p.parse_args()
 
     ndvi = ndvi_ext = None

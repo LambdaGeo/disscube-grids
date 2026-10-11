@@ -1,6 +1,6 @@
 """One figure with the open sources of the state of Pará on the 5 km grid of `sources.toml`.
 
-    python figure_sources.py [cube.tif] [--bdc bdc_ndvi.tif] [--year 2024] [--out ../docs/para_sources.png]
+    python figure_sources.py [cube.tif] [--bdc bdc_ndvi.tif] [--year 2024] [--out ../../docs/figures/para_sources.png]
                              [--state-zip PA_UF_2025.zip] [--title "Pará: ..."]
 
 (a) MapBiomas: the level-1 class that covers most of each cell (`l1_class`: Forest, Herbaceous and shrubby
@@ -57,7 +57,7 @@ def main():
     ap.add_argument("cube", nargs="?", default=str(HERE / "data" / "sources.tif"))
     ap.add_argument("--bdc", default=None, help="GeoTIFF of bdc_ndvi.toml (adds the NDVI panel)")
     ap.add_argument("--year", default="2024")
-    ap.add_argument("--out", default=str(HERE.parent / "docs" / "para_sources.png"))
+    ap.add_argument("--out", default=str(HERE.parent.parent / "docs" / "figures" / "para_sources.png"))
     ap.add_argument("--state-zip", default=str(HERE / "PA_UF_2025.zip"), help="state boundary (IBGE shapefile in a zip)")
     ap.add_argument("--title", default=None, help="title above the panels (none by default: the caption of the article says it)")
     a = ap.parse_args()
