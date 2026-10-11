@@ -13,7 +13,7 @@ variable is derived. There is no case-specific code; the only shared script is
 |---|---|---|---|---|
 | `ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas, PRODES | 300 m, 58 × 59 cells | MapBiomas half **ran here** (10 Oct 2026, DisSCube 0.5.0); BDC half not run (STAC unreachable from the build machine) |
 | `para/` | `sources.toml` | MapBiomas (collection 11, level-1 land use), PRODES | 5 km, whole state, about 284 × 276 cells | **to run** (needs DisSCube with block reading, see below); the same file ran on the Acre at 1 km |
-| `para/` | `bdc_ndvi.toml` | BDC Landsat NDVI (STAC) | same | not run: the BDC adapter still reads whole windows |
+| `para/` | `bdc_ndvi.toml` | BDC MODIS NDVI (STAC, 231 m) | same | **to run** (needs access to the BDC STAC): third panel of the figure |
 | `br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (10 Oct 2026, DisSCube 0.5.0) |
 | `br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | MapBiomas half **ran here** (11 Oct 2026, DisSCube 0.5.0); BDC half: to run (needs access to the BDC STAC service) |
 | `amazonia_legal/` | `prodes.toml` | PRODES (Legal Amazon) | 5.28 km, whole region, 680 × 520 cells | the tile script **ran** for the whole region (884 tiles); the single TOML **ran here** on 3 × 3 tiles (agrees with it); whole region: to run (needs the block-reading DisSCube) |
@@ -85,15 +85,17 @@ stops for lack of memory; the same file on the Acre (430 million pixels, 1 km) r
   placed under non-vegetated area by assumption: check it in the legend CSV. For the share of the cell in a class instead of the
   dominant one, `percentage` takes a list: `class_code = [3, 4, 5, 6, 49]`.
 - **PRODES:** `prodes_class` is the class that covers most of the cell: forest, deforested up to 2024, other (non-forest vegetation) and
-  water (hydrography, kept apart by `separate_water = true` on the source: PRODES alone folds it into other; clouds are no data). For the deforested share, `percentage` with `class_code = 2`.
+  water (hydrography, kept apart by `water = 4` in `[source.codes]` of the source; without it the default map folds it into other; clouds are no data). For the deforested share, `percentage` with `class_code = 2`.
 - `figure_sources.py` draws the sources side by side (`docs/para_sources.png`): (a) MapBiomas level-1 land use, (b) PRODES classes and,
   with `--bdc` pointing to the GeoTIFF of `bdc_ndvi.toml`, (c) the BDC NDVI. Cells outside the state are masked using the IBGE
   boundary ([`PA_UF_2025.zip`](https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2025/UFs/PA/PA_UF_2025.zip), IBGE territorial mesh 2025, kept in the folder).
-- `bdc_ndvi.toml` is the Brazil Data Cube NDVI on the same grid, **not run**: the BDC adapter reads every scene of the period whole,
-  which does not fit over the state. Use a smaller `extent`, or the island (`ilha_maranhao/`).
+- `bdc_ndvi.toml` is the Brazil Data Cube NDVI on the same grid (dry season 2020), from the MODIS cube (`mod13q1-6.1`, 231 m): the
+  Landsat cube (30 m) over the whole state does not fit, because the BDC adapter reads every scene of the period whole. Run it
+  (`./run.sh run bdc_ndvi`, network) and `./run.sh plot sources` adds it as panel (c). The collection id and the asset name are those of the
+  [BDC STAC catalog](https://data.inpe.br/bdc/stac/v1/collections/mod13q1-6.1); not run yet, check them with `./run.sh validate bdc_ndvi`.
 
 ```bash
-cd para && ./run.sh run sources && ./run.sh plot sources      # network; 2 derivations, each a pass over about 2 billion pixels
+cd para && ./run.sh run sources && ./run.sh run bdc_ndvi && ./run.sh plot sources   # network; the BDC step is optional (panel c)
 ```
 
 ## Run

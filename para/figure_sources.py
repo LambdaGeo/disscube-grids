@@ -5,7 +5,7 @@
 
 (a) MapBiomas: the level-1 class that covers most of each cell (`l1_class`: Forest, Herbaceous and shrubby
 vegetation, Farming, Non vegetated area, Water). (b) PRODES: the class that covers most of the cell (`prodes_class`:
-Forest, Deforested up to the year, Other, Water). (c) Brazil Data Cube: Landsat NDVI, only when --bdc gives the cube of
+Forest, Deforested up to the year, Other, Water). (c) Brazil Data Cube: MODIS NDVI, only when --bdc gives the cube of
 bdc_ndvi.toml. Cells outside the state (IBGE boundary, PA_UF_2025.zip, from https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2025/UFs/PA/PA_UF_2025.zip) are masked.
 """
 import argparse
@@ -25,7 +25,7 @@ LEVEL1 = {1: ("Forest", "#1f6b2e"), 2: ("Herbaceous and shrubby vegetation", "#c
           4: ("Non vegetated area", "#b0524a"), 5: ("Water", "#2b6cb0")}
 PRODES = {1: ("Forest", LEVEL1[1][1]), 2: ("Deforested up to the year", "#f0d800"),   # same green as MapBiomas forest
           3: ("Other (non-forest vegetation)", "#c9c9c9"),
-          4: ("Water (hydrography)", LEVEL1[5][1])}     # class 4 needs `separate_water = true` in sources.toml; clouds are no data
+          4: ("Water (hydrography)", LEVEL1[5][1])}     # class 4 needs `water = 4` in [source.codes] of sources.toml; clouds are no data
 
 
 def band(ds, name):
@@ -93,7 +93,7 @@ def main():
     if nd is not None:
         im = axes[2].imshow(np.where(inside, nd, np.nan), extent=ext, cmap="YlGn", vmin=0, vmax=1, interpolation="nearest")
         fig.colorbar(im, ax=axes[2], shrink=0.6, label="NDVI (mean of the dry-season composite)")
-        axes[2].set_title("(c) Brazil Data Cube, Landsat NDVI 2020", fontsize=11, loc="left")
+        axes[2].set_title("(c) Brazil Data Cube, MODIS NDVI, dry season 2020", fontsize=11, loc="left")
 
     # scale bar: about a quarter of the width, rounded to 1, 2 or 5 x 10^k km (the extent is in km, in the grid CRS)
     width, height = ext[1] - ext[0], ext[3] - ext[2]

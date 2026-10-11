@@ -31,7 +31,12 @@ resolution = 30
 id = "prodes_{year}"
 type = "prodes"
 years = [2024]
-separate_water = true       # hydrography is class 4, apart from the non-forest vegetation (3); needs the DisSCube patch for it
+
+[source.codes]              # local code of each PRODES category (1 to 255; 0 is no data); the same code merges categories
+forest     = 1              # vegetação nativa florestal
+deforested = 2              # desmatamento até o ano (dAAAA and rAAAA)
+non_forest = 3              # vegetação nativa não florestal
+water      = 4              # hidrografia: its own class here (3 would merge it with the non-forest, as PRODES alone does)
 
 # ── Derived variables ───────────────────────────────────────────────────────
 # Land use of the cell: the class that covers most of it. `l1_class` reads the MapBiomas map at MapBiomas level 1 through
