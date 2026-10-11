@@ -84,8 +84,8 @@ stops for lack of memory; the same file on the Acre (430 million pixels, 1 km) r
   ([Collection 11 legend codes](https://brasil.mapbiomas.org/downloads/codigos-de-legenda/)). Code 91 appears in the 2024 map and is
   placed under non-vegetated area by assumption: check it in the legend CSV. For the share of the cell in a class instead of the
   dominant one, `percentage` takes a list: `class_code = [3, 4, 5, 6, 49]`.
-- **PRODES:** `prodes_class` is the class that covers most of the cell: forest, deforested up to 2024, other (non-forest vegetation,
-  water, cloud). For the deforested share, `percentage` with `class_code = 2`.
+- **PRODES:** `prodes_class` is the class that covers most of the cell: forest, deforested up to 2024, other (non-forest vegetation) and
+  water (hydrography, kept apart by `separate_water = true` on the source: PRODES alone folds it into other; clouds are no data). For the deforested share, `percentage` with `class_code = 2`.
 - `figure_sources.py` draws the sources side by side (`docs/para_sources.png`): (a) MapBiomas level-1 land use, (b) PRODES classes and,
   with `--bdc` pointing to the GeoTIFF of `bdc_ndvi.toml`, (c) the BDC NDVI. Cells outside the state are masked using the IBGE
   boundary ([`PA_UF_2025.zip`](https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2025/UFs/PA/PA_UF_2025.zip), IBGE territorial mesh 2025, kept in the folder).

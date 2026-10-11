@@ -31,6 +31,7 @@ resolution = 30
 id = "prodes_{year}"
 type = "prodes"
 years = [2024]
+separate_water = true       # hydrography is class 4, apart from the non-forest vegetation (3); needs the DisSCube patch for it
 
 # ── Derived variables ───────────────────────────────────────────────────────
 # Land use of the cell: the class that covers most of it. `l1_class` reads the MapBiomas map at MapBiomas level 1 through
