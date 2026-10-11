@@ -11,8 +11,7 @@ variable is derived. There is no case-specific code; the only shared script is
 
 | Area | Pipeline | Sources | Grid | Status |
 |---|---|---|---|---|
-| `ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas | 300 m, 58 × 59 cells | MapBiomas half **ran here** (10 Oct 2026, DisSCube 0.5.0); BDC half not run (STAC unreachable from the build machine) |
-| `ilha_maranhao/` | `prodes.toml` | PRODES | same | **ran here**; has data over the island, but see the note below |
+| `ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas, PRODES | 300 m, 58 × 59 cells | MapBiomas half **ran here** (10 Oct 2026, DisSCube 0.5.0); BDC half not run (STAC unreachable from the build machine) |
 | `br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (10 Oct 2026, DisSCube 0.5.0) |
 | `br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | MapBiomas half **ran here** (11 Oct 2026, DisSCube 0.5.0); BDC half: to run (needs access to the BDC STAC service) |
 | `brasil_5km/` | `build_mapbiomas_cellspace.py` | MapBiomas (collection 11, 30 m) | 5.28 km, 900 × 1,040 cells | in progress; needs a tile loop |
@@ -24,11 +23,16 @@ MapBiomas (collection 11) on the 300 m BDC-snapped grid: 3,083 of 3,422 cells ha
 as the earlier run in `disscube-recipes`. It takes about 6 s after the download.
 ![MapBiomas on the island](docs/ilha_maranhao_mapbiomas.png)
 
+`ilha_maranhao/figure_sources.py` draws the island with the BDC indices (NDVI and MNDWI, when `bdc_mapbiomas.toml` has been
+run) and the MapBiomas land use, urban and mangrove shares and the urban change from 2000 to 2020
+(`python figure_sources.py` in `ilha_maranhao/`; the PRODES maps are left out, see below).
+
 PRODES (edition `prodes_amazonia_legal_2025_v20260408`) returns data in 2,897 of the 3,422 cells,
 so the island is inside its domain. **It is not a good demonstration**: the south-west shows a
 straight-edged block that is entirely "deforested" in every year, which looks like an artefact of
 the PRODES domain edge (the island lies at the limit of the Legal Amazon) and not like land cover.
-We kept `prodes.toml` as the record of this test; PRODES is shown on `br163/` instead.
+The PRODES source is kept in `bdc_mapbiomas.toml` (variables prefixed `prodes_`) as the record of this test, so the island is
+built from three sources in one file; PRODES is shown as a useful map on `br163/` instead.
 ![PRODES on the island](docs/ilha_maranhao_prodes.png)
 
 PRODES on the BR-163 near Mojuí dos Campos (500 m grid, 94 × 86 cells, 7,997 of 8,084 cells with data,
@@ -58,7 +62,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cd ilha_maranhao && ./run.sh all            # validate, run (network), export GeoTIFF, plot
 cd ../br163 && ./run.sh run prodes && ./run.sh run bdc_mapbiomas && python figure_sources.py   # three sources on one grid
-./run.sh validate prodes                    # any step, any pipeline of the folder
+./run.sh validate bdc_mapbiomas             # any step, any pipeline of the folder
 ```
 
 Maps are written to `<area>/images/<pipeline>/` (git-ignored; the ones shown in this README are

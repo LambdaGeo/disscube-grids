@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ./run.sh [validate|run|plot|all] [bdc_mapbiomas|prodes]      (default: all bdc_mapbiomas)
+# ./run.sh [validate|run|plot|all] [bdc_mapbiomas]      (default: all bdc_mapbiomas)
 # `run` fetches the sources (network), derives the variables and exports one GeoTIFF.
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; P="${2:-bdc_mapbiomas}"
