@@ -14,6 +14,7 @@ variable is derived. There is no case-specific code; the only shared script is
 | `ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas, PRODES | 300 m, 58 × 59 cells | MapBiomas half **ran here** (10 Oct 2026, DisSCube 0.5.0); BDC half not run (STAC unreachable from the build machine) |
 | `br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (10 Oct 2026, DisSCube 0.5.0) |
 | `br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | MapBiomas half **ran here** (11 Oct 2026, DisSCube 0.5.0); BDC half: to run (needs access to the BDC STAC service) |
+| `amazonia_legal/` | `prodes_tile.toml` | PRODES (Legal Amazon) | 5.28 km, whole region, tile by tile | one tile **ran here** (11 Oct 2026, DisSCube 0.5.0, 7 s); full region: to run (~880 tiles) |
 | `brasil_5km/` | `build_mapbiomas_cellspace.py` | MapBiomas (collection 11, 30 m) | 5.28 km, 900 × 1,040 cells | in progress; needs a tile loop |
 
 ## First results (Ilha do Maranhão, 10 Oct 2026)
@@ -54,6 +55,18 @@ Two things found while running, both in DisSCube 0.5.0: `disscube export` as a s
 looks the grid up by its name (`ilha_do_maranhao`) while the cube stores `ilha_do_maranhao/300m`, and
 fails; `run --output` exports correctly, which is what `run.sh` uses. And the process ends with an
 `Error in sys.excepthook` message after the work is done (output is complete).
+
+### PRODES over the whole Legal Amazon (`amazonia_legal/`)
+
+DisSCube 0.5.0 reads the whole window of a source into memory, and the PRODES raster has 9.7 billion pixels, so one
+`disscube run` over the region does not fit. `prodes_tile.toml` is the pipeline for one 105.6 km tile (valid as it stands);
+`build_prodes_amazonia.py` writes it once per tile, runs DisSCube, joins the tiles in `data/amazonia_prodes_5k.tif` and draws
+`docs/amazonia_prodes.png`. Bands: `prodes_deforested_pct_<year>`, `prodes_forest_pct_<year>`.
+
+```bash
+cd amazonia_legal
+python build_prodes_amazonia.py --workdir data --jobs 2     # about 7 s per tile; --resume continues an interrupted run
+```
 
 ## Run
 
