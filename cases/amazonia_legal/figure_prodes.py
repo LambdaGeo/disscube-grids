@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Map of the PRODES forest and accumulated deforestation shares on the Legal Amazon grid.
 
-    python figure_prodes.py data/prodes.tif [--year 2024] [--out ../docs/amazonia_prodes.png]
+    python figure_prodes.py data/prodes.tif [--year 2024] [--out ../../docs/figures/amazonia_prodes.png]
 
 Reads the GeoTIFF that `disscube run prodes.toml --output data/prodes.tif` writes (bands
 prodes_forest_pct_<year> and prodes_deforested_pct_<year>).
@@ -24,7 +24,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("tif", type=pathlib.Path)
     ap.add_argument("--year", default="2024")
-    ap.add_argument("--out", type=pathlib.Path, default=HERE.parent / "docs" / "amazonia_prodes.png")
+    ap.add_argument("--out", type=pathlib.Path, default=HERE.parent.parent / "docs" / "figures" / "amazonia_prodes.png")
     a = ap.parse_args()
     with rasterio.open(a.tif) as s:
         names, tr = list(s.descriptions), s.transform

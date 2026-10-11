@@ -7,7 +7,7 @@
 #
 # NOT RUN yet: the collection id and the asset name come from the BDC STAC catalog
 # (https://data.inpe.br/bdc/stac/v1/collections/mod13q1-6.1: asset NDVI, int16, scale 0.0001, nodata -3000); check them with
-# `disscube validate` and a first run. Needs network and the `bdc` extra (pystac-client, fiona): pip install -r ../requirements.txt
+# `disscube validate` and a first run. Needs network and the `bdc` extra (pystac-client, fiona): pip install -r ../../requirements.txt
 #
 #     disscube validate bdc_ndvi.toml
 #     disscube run bdc_ndvi.toml --workspace data/bdc_ndvi --output data/bdc_ndvi.tif

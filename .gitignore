@@ -1,5 +1,4 @@
 data/
-images/*/
-!images/.gitkeep
+images/
 __pycache__/
 .venv/

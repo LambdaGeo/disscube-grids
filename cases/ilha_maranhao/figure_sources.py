@@ -1,6 +1,6 @@
 """Figure of the Ilha do Maranhão grid (300 m): Brazil Data Cube indices and MapBiomas land use.
 
-    python figure_sources.py [--cube data/bdc_mapbiomas.tif] [--out ../docs/ilha_maranhao_sources.png]
+    python figure_sources.py [--cube data/bdc_mapbiomas.tif] [--out ../../docs/figures/ilha_maranhao_sources.png]
 
 Top row: Landsat NDVI and MNDWI from the Brazil Data Cube (dry season 2020), the MapBiomas land use of 2020
 and the PRODES deforested share of 2024. Bottom row: urban and mangrove share in 2020 and the change in urban
@@ -58,7 +58,7 @@ def panel(ax, a, ext, title, cmap, vmin, vmax, label):
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--cube", default=str(HERE / "data/bdc_mapbiomas.tif"))
-    p.add_argument("--out", default=str(HERE.parent / "docs/ilha_maranhao_sources.png"))
+    p.add_argument("--out", default=str(HERE.parent.parent / "docs/figures/ilha_maranhao_sources.png"))
     a = p.parse_args()
 
     ndvi, ext = band(a.cube, "ndvi_mean")

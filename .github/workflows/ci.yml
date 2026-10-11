@@ -12,8 +12,8 @@ jobs:
       - name: Validate every pipeline (no data is downloaded)
         run: |
           n=0
-          for f in */*.toml; do
-            case "$f" in brasil_5km/crosswalk.toml) continue ;; esac
+          for f in cases/*/*.toml; do
+            case "$f" in cases/brasil_5km/crosswalk.toml) continue ;; esac
             disscube validate "$f"; n=$((n+1))
           done
           echo "$n pipelines validated"; test "$n" -gt 0
