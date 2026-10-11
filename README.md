@@ -14,6 +14,7 @@ variable is derived. There is no case-specific code; the only shared script is
 | `ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas | 300 m, 58 × 59 cells | MapBiomas half **ran here** (10 Oct 2026, DisSCube 0.5.0); BDC half not run (STAC unreachable from the build machine) |
 | `ilha_maranhao/` | `prodes.toml` | PRODES | same | **ran here**; has data over the island, but see the note below |
 | `br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (10 Oct 2026, DisSCube 0.5.0) |
+| `br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | MapBiomas half **ran here** (11 Oct 2026, DisSCube 0.5.0); BDC half: to run (needs access to the BDC STAC service) |
 | `brasil_5km/` | `build_mapbiomas_cellspace.py` | MapBiomas (collection 11, 30 m) | 5.28 km, 900 × 1,040 cells | in progress; needs a tile loop |
 
 ## First results (Ilha do Maranhão, 10 Oct 2026)
@@ -35,6 +36,16 @@ about 5 s after the download): deforested share 18.1 % (2008) → 20.1 % (2016) 
 81.6 % → 79.5 % → 79.2 %. The maps show the fishbone pattern of the road's side roads.
 ![PRODES on the BR-163](docs/br163_prodes.png)
 
+### Three sources on one grid (BR-163)
+
+`br163/bdc_mapbiomas.toml` uses the same area and 500 m grid as `br163/prodes.toml` (the LuccME Lab15 cellular
+space), so that the Brazil Data Cube (Landsat NDVI, dry season 2020), MapBiomas (collection 11) and PRODES can be read
+cell by cell. `br163/figure_sources.py` draws them together (forest share from MapBiomas and from PRODES, pasture and
+deforested share, and the difference between the two forest shares). It is an illustration of how the same declarative
+file starts from different open sources, not a validation: the sources define forest differently and are not expected to
+agree cell by cell. The BDC panel stays empty until `bdc_mapbiomas.toml` has been run.
+![The three sources on the BR-163](docs/br163_sources.png)
+
 Two things found while running, both in DisSCube 0.5.0: `disscube export` as a separate command
 looks the grid up by its name (`ilha_do_maranhao`) while the cube stores `ilha_do_maranhao/300m`, and
 fails; `run --output` exports correctly, which is what `run.sh` uses. And the process ends with an
@@ -46,6 +57,7 @@ fails; `run --output` exports correctly, which is what `run.sh` uses. And the pr
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cd ilha_maranhao && ./run.sh all            # validate, run (network), export GeoTIFF, plot
+cd ../br163 && ./run.sh run prodes && ./run.sh run bdc_mapbiomas && python figure_sources.py   # three sources on one grid
 ./run.sh validate prodes                    # any step, any pipeline of the folder
 ```
 
