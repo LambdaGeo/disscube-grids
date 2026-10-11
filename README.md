@@ -16,7 +16,7 @@ variable is derived. There is no case-specific code; the only shared script is
 | `para/` | `bdc_ndvi.toml` | BDC Landsat NDVI (STAC) | same | not run: the BDC adapter still reads whole windows |
 | `br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (10 Oct 2026, DisSCube 0.5.0) |
 | `br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | MapBiomas half **ran here** (11 Oct 2026, DisSCube 0.5.0); BDC half: to run (needs access to the BDC STAC service) |
-| `amazonia_legal/` | `prodes_tile.toml` | PRODES (Legal Amazon) | 5.28 km, whole region, tile by tile | one tile **ran here** (11 Oct 2026, DisSCube 0.5.0, 7 s); full region: to run (~880 tiles) |
+| `amazonia_legal/` | `prodes.toml` | PRODES (Legal Amazon) | 5.28 km, whole region, 680 × 520 cells | the tile script **ran** for the whole region (884 tiles); the single TOML **ran here** on 3 × 3 tiles (agrees with it); whole region: to run (needs the block-reading DisSCube) |
 | `brasil_5km/` | `build_mapbiomas_cellspace.py` | MapBiomas (collection 11, 30 m) | 5.28 km, 900 × 1,040 cells | in progress; needs a tile loop |
 
 ## First results (Ilha do Maranhão, 10 Oct 2026)
@@ -60,14 +60,15 @@ fails; `run --output` exports correctly, which is what `run.sh` uses. And the pr
 
 ### PRODES over the whole Legal Amazon (`amazonia_legal/`)
 
-DisSCube 0.5.0 reads the whole window of a source into memory, and the PRODES raster has 9.7 billion pixels, so one
-`disscube run` over the region does not fit. `prodes_tile.toml` is the pipeline for one 105.6 km tile (valid as it stands);
-`build_prodes_amazonia.py` writes it once per tile, runs DisSCube, joins the tiles in `data/amazonia_prodes_5k.tif` and draws
-`docs/amazonia_prodes.png`. Bands: `prodes_deforested_pct_<year>`, `prodes_forest_pct_<year>`.
+One pipeline file, `prodes.toml`, for the whole region: PRODES (2008 and 2024) on the BDC Albers mesh, 5.28 km cells (680 × 520, the
+cells of the BDC_SM tiles). The PRODES raster has 9.7 billion pixels, so it needs a DisSCube that reads and aligns by blocks (branch
+`feat/out-of-core-sources` of [DisSModel/disscube](https://github.com/DisSModel/disscube), not yet merged: change this note when it
+is); 0.5.0 as released stops for lack of memory. Bands: `prodes_deforested_pct_<year>`, `prodes_forest_pct_<year>`.
+`figure_prodes.py` draws the map (`docs/amazonia_prodes.png`). This replaces the tile script that ran the same pipeline 884 times
+(`build_prodes_amazonia.py`); on a window of 3 × 3 tiles the two agree to 0.4 % of a cell at most.
 
 ```bash
-cd amazonia_legal
-python build_prodes_amazonia.py --workdir data --jobs 2     # about 7 s per tile; --resume continues an interrupted run
+cd amazonia_legal && ./run.sh all          # validate, run (network), export GeoTIFF, plot
 ```
 
 ## The state of Pará (`para/`)
