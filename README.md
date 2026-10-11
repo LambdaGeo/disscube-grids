@@ -12,6 +12,8 @@ variable is derived. There is no case-specific code; the only shared script is
 | Area | Pipeline | Sources | Grid | Status |
 |---|---|---|---|---|
 | `ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas, PRODES | 300 m, 58 × 59 cells | MapBiomas half **ran here** (10 Oct 2026, DisSCube 0.5.0); BDC half not run (STAC unreachable from the build machine) |
+| `para/` | `sources.toml` | MapBiomas (collection 11, level-1 land use), PRODES | 5 km, whole state, about 284 × 276 cells | **to run** (needs DisSCube with block reading, see below); the same file ran on the Acre at 1 km |
+| `para/` | `bdc_ndvi.toml` | BDC Landsat NDVI (STAC) | same | not run: the BDC adapter still reads whole windows |
 | `br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (10 Oct 2026, DisSCube 0.5.0) |
 | `br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | MapBiomas half **ran here** (11 Oct 2026, DisSCube 0.5.0); BDC half: to run (needs access to the BDC STAC service) |
 | `amazonia_legal/` | `prodes_tile.toml` | PRODES (Legal Amazon) | 5.28 km, whole region, tile by tile | one tile **ran here** (11 Oct 2026, DisSCube 0.5.0, 7 s); full region: to run (~880 tiles) |
@@ -66,6 +68,31 @@ DisSCube 0.5.0 reads the whole window of a source into memory, and the PRODES ra
 ```bash
 cd amazonia_legal
 python build_prodes_amazonia.py --workdir data --jobs 2     # about 7 s per tile; --resume continues an interrupted run
+```
+
+## The state of Pará (`para/`)
+
+One pipeline file, `sources.toml`, for the whole state: MapBiomas 2024 (30 m) and PRODES 2024, on a 5 km grid snapped to the BDC
+Albers mesh. Pará lies entirely inside the Legal Amazon, so PRODES covers all of it. Each window is about 2.2 billion pixels, so it
+needs a DisSCube that reads and aligns by blocks (branch `feat/out-of-core-sources` of
+[DisSModel/disscube](https://github.com/DisSModel/disscube), not yet merged: change this note when it is). With 0.5.0 as released it
+stops for lack of memory; the same file on the Acre (430 million pixels, 1 km) ran with 1.3 GB.
+
+- **Land use:** `l1_class` is the MapBiomas class that covers most of the cell, at **MapBiomas level 1** (1 Forest, 2 Herbaceous and
+  shrubby vegetation, 3 Farming, 4 Non vegetated area, 5 Water), through `[derive.params.groups]`, a list of leaf codes per class
+  ([Collection 11 legend codes](https://brasil.mapbiomas.org/downloads/codigos-de-legenda/)). Code 91 appears in the 2024 map and is
+  placed under non-vegetated area by assumption: check it in the legend CSV. For the share of the cell in a class instead of the
+  dominant one, `percentage` takes a list: `class_code = [3, 4, 5, 6, 49]`.
+- **PRODES:** `prodes_class` is the class that covers most of the cell: forest, deforested up to 2024, other (non-forest vegetation,
+  water, cloud). For the deforested share, `percentage` with `class_code = 2`.
+- `figure_sources.py` draws the sources side by side (`docs/para_sources.png`): (a) MapBiomas level-1 land use, (b) PRODES classes and,
+  with `--bdc` pointing to the GeoTIFF of `bdc_ndvi.toml`, (c) the BDC NDVI. Cells outside the state are masked using the IBGE
+  boundary (`PA_UF_2025.zip`).
+- `bdc_ndvi.toml` is the Brazil Data Cube NDVI on the same grid, **not run**: the BDC adapter reads every scene of the period whole,
+  which does not fit over the state. Use a smaller `extent`, or the island (`ilha_maranhao/`).
+
+```bash
+cd para && ./run.sh run sources && ./run.sh plot sources      # network; 2 derivations, each a pass over about 2 billion pixels
 ```
 
 ## Run

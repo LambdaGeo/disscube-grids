@@ -1,0 +1,104 @@
+"""One figure with the open sources of the state of Pará on the 5 km grid of `sources.toml`.
+
+    python figure_sources.py [cube.tif] [--bdc bdc_ndvi.tif] [--year 2024] [--out ../docs/para_sources.png]
+                             [--state-zip PA_UF_2025.zip] [--title Pará]
+
+(a) MapBiomas: the level-1 class that covers most of each cell (`l1_class`: Forest, Herbaceous and shrubby
+vegetation, Farming, Non vegetated area, Water). (b) PRODES: the class that covers most of the cell (`prodes_class`:
+Forest, Deforested up to the year, Other). (c) Brazil Data Cube: Landsat NDVI, only when --bdc gives the cube of
+bdc_ndvi.toml. Cells outside the state (IBGE boundary, PA_UF_2025.zip) are masked.
+"""
+import argparse
+from pathlib import Path
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import rasterio
+from matplotlib.colors import BoundaryNorm, ListedColormap
+from matplotlib.patches import Patch
+from rasterio.features import rasterize
+
+HERE = Path(__file__).resolve().parent
+LEVEL1 = {1: ("Forest", "#1f6b2e"), 2: ("Herbaceous and shrubby vegetation", "#c9d86b"), 3: ("Farming", "#f2c14e"),
+          4: ("Non vegetated area", "#b0524a"), 5: ("Water", "#2b6cb0")}
+PRODES = {1: ("Forest", "#1f7a1f"), 2: ("Deforested up to the year", "#f0d800"), 3: ("Other (non-forest, water, cloud)", "#c9c9c9")}
+
+
+def band(ds, name):
+    names = [d or f"band{i + 1}" for i, d in enumerate(ds.descriptions)]
+    if name not in names:                     # variables with a time axis carry the year: name_<year>
+        cand = [n for n in names if n.startswith(name + "_")]
+        if len(cand) != 1:
+            return None
+        name = cand[0]
+    a = ds.read(names.index(name) + 1).astype("float64")
+    if ds.nodata is not None and not np.isnan(ds.nodata):
+        a[a == ds.nodata] = np.nan
+    return a
+
+
+def load(path, name, state_zip):
+    import geopandas as gpd
+    with rasterio.open(path) as ds:
+        g = gpd.read_file(f"zip://{state_zip}").to_crs(ds.crs)
+        inside = rasterize(g.geometry, out_shape=ds.shape, transform=ds.transform, fill=0, default_value=1,
+                           all_touched=True).astype(bool)
+        arr = band(ds, name)
+        ext = (ds.bounds.left / 1e3, ds.bounds.right / 1e3, ds.bounds.bottom / 1e3, ds.bounds.top / 1e3)
+    return arr, inside, ext
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("cube", nargs="?", default=str(HERE / "data" / "sources.tif"))
+    ap.add_argument("--bdc", default=None, help="GeoTIFF of bdc_ndvi.toml (adds the NDVI panel)")
+    ap.add_argument("--year", default="2024")
+    ap.add_argument("--out", default=str(HERE.parent / "docs" / "para_sources.png"))
+    ap.add_argument("--state-zip", default=str(HERE / "PA_UF_2025.zip"), help="state boundary (IBGE shapefile in a zip)")
+    ap.add_argument("--title", default="Pará")
+    a = ap.parse_args()
+
+    l1, inside, ext = load(a.cube, f"l1_class_{a.year}", a.state_zip)
+    pr, _, _ = load(a.cube, f"prodes_class_{a.year}", a.state_zip)
+    if l1 is None:
+        raise SystemExit(f"no band l1_class_{a.year} in {a.cube}")
+    nd = load(a.bdc, "ndvi_mean", a.state_zip)[0] if a.bdc else None
+
+    n = 2 + (nd is not None)
+    aspect = (ext[3] - ext[2]) / (ext[1] - ext[0])             # map height / width, so the panels fit the state
+    pw = 5.4
+    fig, axes = plt.subplots(1, n, figsize=(pw * n, pw * aspect + 1.9), constrained_layout=True)
+    axes = np.atleast_1d(axes)
+    for ax in axes:
+        ax.set_xticks([]); ax.set_yticks([]); ax.set_facecolor("white")
+
+    cmap = ListedColormap([c for _, c in LEVEL1.values()])
+    axes[0].imshow(np.where(inside, l1, np.nan), extent=ext, cmap=cmap, norm=BoundaryNorm(np.arange(0.5, 6.5), cmap.N),
+                   interpolation="nearest")
+    axes[0].set_title(f"(a) MapBiomas land use, {a.year}", fontsize=11, loc="left")
+    axes[0].legend(handles=[Patch(color=c, label=nm) for nm, c in LEVEL1.values()], loc="upper center", bbox_to_anchor=(0.5, -0.01), ncol=2, fontsize=8,
+                   title="MapBiomas level 1 (class covering most of the cell)", title_fontsize=8, frameon=False)
+
+    pcmap = ListedColormap([c for _, c in PRODES.values()])
+    axes[1].imshow(np.where(inside, pr, np.nan), extent=ext, cmap=pcmap, norm=BoundaryNorm(np.arange(0.5, 4.5), pcmap.N),
+                   interpolation="nearest")
+    axes[1].set_title(f"(b) PRODES, {a.year}", fontsize=11, loc="left")
+    axes[1].legend(handles=[Patch(color=c, label=nm) for nm, c in PRODES.values()], loc="upper center", bbox_to_anchor=(0.5, -0.01), ncol=1, fontsize=8,
+                   title="PRODES (class covering most of the cell)", title_fontsize=8, frameon=False)
+
+    if nd is not None:
+        im = axes[2].imshow(np.where(inside, nd, np.nan), extent=ext, cmap="YlGn", vmin=0, vmax=1, interpolation="nearest")
+        fig.colorbar(im, ax=axes[2], shrink=0.6, label="NDVI (mean of the dry-season composite)")
+        axes[2].set_title("(c) Brazil Data Cube, Landsat NDVI 2020", fontsize=11, loc="left")
+
+    fig.suptitle(f"{a.title}: {'three' if n == 3 else 'two'} open sources on one grid, aggregated by DisSCube", fontsize=12)
+    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(a.out, dpi=300)
+    share = {LEVEL1[k][0]: float(np.mean(l1[inside & ~np.isnan(l1)] == k)) for k in LEVEL1}
+    print("figure:", a.out, "| share of the cells by class:", {k: round(v, 3) for k, v in share.items()})
+
+
+if __name__ == "__main__":
+    main()
