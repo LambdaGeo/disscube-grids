@@ -17,7 +17,7 @@ variable is derived. There is no case-specific code; the only shared script is
 | `br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (10 Oct 2026, DisSCube 0.5.0) |
 | `br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | MapBiomas half **ran here** (11 Oct 2026, DisSCube 0.5.0); BDC half: to run (needs access to the BDC STAC service) |
 | `amazonia_legal/` | `prodes.toml` | PRODES (Legal Amazon) | 5.28 km, whole region, 680 × 520 cells | the tile script **ran** for the whole region (884 tiles); the single TOML **ran here** on 3 × 3 tiles (agrees with it); whole region: to run (needs the block-reading DisSCube) |
-| `brasil_5km/` | `build_mapbiomas_cellspace.py` | MapBiomas (collection 11, 30 m) | 5.28 km, 900 × 1,040 cells | in progress; needs a tile loop |
+| `brasil_5km/` | `mapbiomas.toml` | MapBiomas (collection 11, 30 m) | 5.28 km, 900 × 1,040 cells | single TOML **ran here** on 2 tiles (agrees with the tile script); whole country: to run (needs the block-reading DisSCube) |
 
 ## First results (Ilha do Maranhão, 10 Oct 2026)
 
@@ -113,10 +113,8 @@ copied to `docs/`).
 
 - **Sources with different geometry on one grid:** BDC composites (raster, STAC), MapBiomas
   (30 m classes), PRODES (Legal Amazon only, years from 2007).
-- **Cost:** `brasil_5km` is the large case. DisSCube 0.5.0 reads the whole window of a MapBiomas
-  source into memory, which does not fit over Brazil at 30 m, so the script runs the same pipeline
-  tile by tile (BDC_SM tiles of 105.6 km, 20 × 20 cells of 5.28 km). Moving this into DisSCube would
-  leave only TOML here.
+- **Cost:** `brasil_5km` is the large case: MapBiomas at 30 m over Brazil is about 9.4 billion pixels. It is one TOML that needs a
+  DisSCube reading by blocks (branch `feat/out-of-core-sources`, not yet merged); with 0.5.0 as released it does not fit in memory.
 
 ## Notes
 

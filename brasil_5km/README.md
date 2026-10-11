@@ -1,6 +1,8 @@
 # Test with another land-use source: MapBiomas (grid only, not part of the main result)
 
-> **Status in this repository (draft).** Copied from open-lucc-workflow (patches 35/36) and not yet adapted. The script takes `--base`, a raster of the 5.28 km grid with the country mask (here `data/raw_cellspace_bdc_5k.tif`, produced by the open-lucc-workflow pipeline), so it is not yet self-contained. To do: make the grid and mask come from a TOML in this folder, and run it again from here.
+> **Status in this repository.** The 5.28 km grid and the seven land-use shares are one TOML here, `mapbiomas.toml`. The drivers and the
+> mask of the cell space still come from the open-lucc-workflow pipeline (`data/raw_cellspace_bdc_5k.tif`); `replace_bands.py` puts the
+> land-use bands of the DisSCube output into it. The whole country is not run yet (see "What was tested here").
 
 Manuscript, section 5.4.3. The main runs use the land-cover layer of the LuccME-BR database (NetCDF, pixels of about
 100 km²). At 5.28 km the land-use bands therefore carry no information finer than that source. This test builds the
@@ -8,39 +10,38 @@ Manuscript, section 5.4.3. The main runs use the land-cover layer of the LuccME-
 to exercise the ingestion of another open source at national scale and to measure its cost. **It generates the
 grid only. The model is not run on it and no result of section 5.4 depends on it.**
 
-## Why it needs a script
+## Why it needs a DisSCube that reads by blocks
 
-DisSCube 0.5.0 reads the whole window of a `mapbiomas` source into memory as float32. Over Brazil at 30 m that is
-about 9.4 billion pixels (more than 35 GB), so a single `disscube run` over the national grid does not fit. The
-script runs DisSCube one BDC_SM tile (105.6 km) at a time, only on tiles that hold cells of the mask (865 of the
-2,340 tiles of the bounding box at 5.28 km), and records time and peak memory per tile.
+MapBiomas at 30 m over Brazil is about 9.4 billion pixels (more than 35 GB as float32). DisSCube 0.5.0 reads the whole window of a
+source into memory, so it does not fit; the first version of this test ran DisSCube tile by tile from a script. With the branch
+`feat/out-of-core-sources` of [DisSModel/disscube](https://github.com/DisSModel/disscube) (not yet merged: change this note when it
+is) one `disscube run` reads, aligns and aggregates by strips of grid rows, and the script is gone. The grid is the BDC_SM mesh in
+tiles of 105.6 km (45 × 52 = 2,340 tiles of 20 × 20 cells, 900 × 1,040 cells).
 
 ## Steps
 
 ```bash
-pip install -r requirements.txt            # disscube 0.5.0
-# 1. try a few tiles first, to time them (tile indices: column,row, both counted from the top-left of the grid)
-python build_mapbiomas_cellspace.py --base data/raw_cellspace_bdc_5k.tif \
-    --out data/raw_cellspace_bdc_5k_mapbiomas_try.tif --workdir data/mapbiomas_try --tiles "25,10;26,10"
-# 2. all tiles (--jobs runs tiles at the same time; --resume keeps the tiles already finished)
-python build_mapbiomas_cellspace.py --base data/raw_cellspace_bdc_5k.tif \
-    --out data/raw_cellspace_bdc_5k_mapbiomas.tif --workdir data/mapbiomas_5k --jobs 3 --resume
-# 3. same completion step as the main cell space, then the checks
+pip install -r requirements.txt            # with the DisSCube branch above
+disscube validate mapbiomas.toml
+disscube run mapbiomas.toml --workspace data/mapbiomas --output data/mapbiomas_5k.tif     # network
+# a quick try on two tiles of Pará: bbox = [5280000.0, 10771200.0, 5491200.0, 10876800.0] in a copy of the file
+# then, with the cell space of the main run:
+python replace_bands.py --base data/raw_cellspace_bdc_5k.tif --bands data/mapbiomas_5k.tif \
+    --out data/raw_cellspace_bdc_5k_mapbiomas.tif
 python scripts/complete_cellspace.py data/raw_cellspace_bdc_5k_mapbiomas.tif data/cellspace_bdc_5k_mapbiomas.tif
 python scripts/check_cellspace.py data/cellspace_bdc_5k_mapbiomas.tif
 ```
 
-`data/mapbiomas_5k/build_report.json` has the wall time, the peak memory, the time of every tile, the number of
-cells of the mask without MapBiomas data, and the area of each class in the NetCDF layer and in MapBiomas (a
-consistency check between two sources for the same year).
+`disscube run` writes `data/mapbiomas/run.json` (sources, derived variables, hashes). Each of the seven classes is one derivation, and
+each one reads and aligns the source again: expect the time of the whole country to be about seven passes over 9.4 billion pixels.
 
 ## Choices that are ours
 
 - The correspondence between MapBiomas codes and the seven classes is declared in
-  `model/mapbiomas_crosswalk.toml`. It is not the one of LuccME-BR, and the legend of collection 11 must be
-  checked ([TO CONFIRM] in the file).
-- Codes that are not listed go to `others`; code 0 (not observed) is nodata, and a cell with no observed pixel
-  is left empty and removed by `complete_cellspace.py`, as in the main cell space.
+  `mapbiomas.toml` (`class_code` lists; `crosswalk.toml` has the same lists). It is not the one of LuccME-BR, and the legend of
+  collection 11 must be checked ([TO CONFIRM] in the file).
+- `others` lists every other code of the legend (10, 14, 22–27, 29–33, 49, 50, 75, 91), so the seven shares add to 1; code 0 (not
+  observed) is nodata, and a cell with no observed pixel is left empty and removed by `complete_cellspace.py`, as in the main cell space.
 - The drivers and the mask are those of the base cell space.
 
 ## Pilot on the published files (author's machine, 10 Oct 2026)
@@ -52,6 +53,7 @@ would take about 7 hours; `--jobs` runs tiles at the same time.
 
 ## What was tested here
 
-On a synthetic MapBiomas raster (EPSG:4326, 0.02°) and the real 5.28 km base cell space, two tiles: the seven
-shares sum to 1 in every cell, the drivers are unchanged, and the per-tile report is written. Reading the published files, the time and the memory were tested by the author (pilot above). Not yet done:
-the whole country, and the comparison of class areas with the NetCDF layer.
+On the two tiles of the pilot (25,10 and 26,10, real MapBiomas 2000) the single TOML and the tile script agree: same cells, same empty
+cells, shares add to 1 in all 800 cells, largest difference 0.24 % of a cell (the edge of the strips and tiles). The TOML took 11 s for the
+two tiles, the script 44 s; `replace_bands.py` on a base cell space gives the same file as the script. Not yet done: the whole country (a
+run by the author), the class codes against the legend of collection 11, and the comparison of class areas with the NetCDF layer.
