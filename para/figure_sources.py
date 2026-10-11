@@ -6,7 +6,7 @@
 (a) MapBiomas: the level-1 class that covers most of each cell (`l1_class`: Forest, Herbaceous and shrubby
 vegetation, Farming, Non vegetated area, Water). (b) PRODES: the class that covers most of the cell (`prodes_class`:
 Forest, Deforested up to the year, Other). (c) Brazil Data Cube: Landsat NDVI, only when --bdc gives the cube of
-bdc_ndvi.toml. Cells outside the state (IBGE boundary, PA_UF_2025.zip) are masked.
+bdc_ndvi.toml. Cells outside the state (IBGE boundary, PA_UF_2025.zip, from https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2025/UFs/PA/PA_UF_2025.zip) are masked.
 """
 import argparse
 from pathlib import Path

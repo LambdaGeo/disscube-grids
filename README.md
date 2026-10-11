@@ -87,7 +87,7 @@ stops for lack of memory; the same file on the Acre (430 million pixels, 1 km) r
   water, cloud). For the deforested share, `percentage` with `class_code = 2`.
 - `figure_sources.py` draws the sources side by side (`docs/para_sources.png`): (a) MapBiomas level-1 land use, (b) PRODES classes and,
   with `--bdc` pointing to the GeoTIFF of `bdc_ndvi.toml`, (c) the BDC NDVI. Cells outside the state are masked using the IBGE
-  boundary (`PA_UF_2025.zip`).
+  boundary ([`PA_UF_2025.zip`](https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2025/UFs/PA/PA_UF_2025.zip), IBGE territorial mesh 2025, kept in the folder).
 - `bdc_ndvi.toml` is the Brazil Data Cube NDVI on the same grid, **not run**: the BDC adapter reads every scene of the period whole,
   which does not fit over the state. Use a smaller `extent`, or the island (`ilha_maranhao/`).
 
