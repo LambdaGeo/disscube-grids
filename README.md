@@ -64,7 +64,7 @@ One pipeline file, `prodes.toml`, for the whole region: PRODES (2008 and 2024) o
 cells of the BDC_SM tiles). The PRODES raster has 9.7 billion pixels, so it needs a DisSCube that reads and aligns by blocks (branch
 `feat/out-of-core-sources` of [DisSModel/disscube](https://github.com/DisSModel/disscube), not yet merged: change this note when it
 is); 0.5.0 as released stops for lack of memory. Bands: `prodes_deforested_pct_<year>`, `prodes_forest_pct_<year>`.
-`figure_prodes.py` draws the map (`docs/figures/amazonia_prodes.png`). This replaces the tile script that ran the same pipeline 884 times
+`./run.sh plot` draws the map with `disscube plot` (`docs/figures/amazonia_prodes.png`), without a script of its own. This replaces the tile script that ran the same pipeline 884 times
 (`build_prodes_amazonia.py`); on a window of 3 × 3 tiles the two agree to 0.4 % of a cell at most.
 
 ```bash
