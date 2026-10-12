@@ -7,7 +7,7 @@ case "${1:-all}" in
   validate) disscube validate "$HERE/$P.toml" ;;
   run)      disscube validate "$HERE/$P.toml"
             mkdir -p "$HERE/data"
-            disscube run "$HERE/$P.toml" --workspace "$HERE/data/$P" --output "$HERE/data/$P.tif" ;;
+            disscube run -v "$HERE/$P.toml" --workspace "$HERE/data/$P" --output "$HERE/data/$P.tif" ;;
   plot)     BDC=(); [ -f "$HERE/data/bdc_ndvi.tif" ] && BDC=(--bdc "$HERE/data/bdc_ndvi.tif")     # third panel when it was run
             python "$HERE/figure_sources.py" "$HERE/data/$P.tif" ${BDC[@]+"${BDC[@]}"} ;;
   all)      "$0" run "$P"; "$0" plot "$P" ;;
