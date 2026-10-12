@@ -1,0 +1,65 @@
+{
+  "pipeline": {
+    "file": "prodes.toml",
+    "checksum": "sha256:b4e76d3361f6b519ca8a7d620670a9fdcbf272d2fd7b9402d25afabef667c16b",
+    "name": "PRODES, Legal Amazon, 5.28 km"
+  },
+  "started": "2026-10-12T13:04:46+00:00",
+  "finished": "2026-10-12T13:31:57+00:00",
+  "grid": "amazonia_legal",
+  "sources": [
+    {
+      "id": "prodes_2008",
+      "type": "prodes",
+      "file": "data/prodes/raw/prodes_2008.tif",
+      "checksum": "sha256:4c6ec5c9688d4d9575b35df23b1bf3a855735ee9249d6ca4c6ba651ba531dd37",
+      "time": 2008
+    },
+    {
+      "id": "prodes_2024",
+      "type": "prodes",
+      "file": "data/prodes/raw/prodes_2024.tif",
+      "checksum": "sha256:fa2539085648df71fb0121fc8a97987586414129fb985b4711731ebe756005de",
+      "time": 2024
+    }
+  ],
+  "derived": [
+    {
+      "target": "prodes_deforested_pct",
+      "source": "prodes_2008",
+      "spec_hash": "c8e93534c938eb345945092378efdecc0810f3979574240b3f606ccf57fc69d9",
+      "times": [
+        2008
+      ],
+      "file": "data/prodes/store/derived/amazonia_legal/global/c8e93534c938eb345945092378efdecc0810f3979574240b3f606ccf57fc69d9/prodes_deforested_pct.zarr"
+    },
+    {
+      "target": "prodes_deforested_pct",
+      "source": "prodes_2024",
+      "spec_hash": "56842ad55ac290b4546772689c6bd29cce0c1c95664cc37124959cb3783e3c90",
+      "times": [
+        2024
+      ],
+      "file": "data/prodes/store/derived/amazonia_legal/global/56842ad55ac290b4546772689c6bd29cce0c1c95664cc37124959cb3783e3c90/prodes_deforested_pct.zarr"
+    },
+    {
+      "target": "prodes_forest_pct",
+      "source": "prodes_2008",
+      "spec_hash": "0e178dd5beefc89eec6069ada864f25eae3c4d2357d2160c84f07a2e679c756e",
+      "times": [
+        2008
+      ],
+      "file": "data/prodes/store/derived/amazonia_legal/global/0e178dd5beefc89eec6069ada864f25eae3c4d2357d2160c84f07a2e679c756e/prodes_forest_pct.zarr"
+    },
+    {
+      "target": "prodes_forest_pct",
+      "source": "prodes_2024",
+      "spec_hash": "53df809306404957a8eca5e2245e9cf15c31bc47949ab7cf2802bee60b9b4758",
+      "times": [
+        2024
+      ],
+      "file": "data/prodes/store/derived/amazonia_legal/global/53df809306404957a8eca5e2245e9cf15c31bc47949ab7cf2802bee60b9b4758/prodes_forest_pct.zarr"
+    }
+  ],
+  "exported": "data/prodes.tif"
+}

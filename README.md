@@ -130,6 +130,8 @@ cd ../br163 && ./run.sh run prodes && ./run.sh run bdc_mapbiomas && python figur
 ./run.sh validate bdc_mapbiomas             # any step, any pipeline of the folder
 ```
 
+Each case keeps the record of its run: `run.log` (with the `time -v` summary), `env.txt` (machine and versions) and `run.json` (pipeline, sources and derived variables with their SHA-256, start and end), the last with the paths made relative to the case folder; the workspace `data/` is not versioned.
+
 Times and memory were measured on one desktop computer (Intel Core i7-7700T at 2.90 GHz, 15 GiB of RAM, Ubuntu, Python 3.12.3) with `/usr/bin/time -v`;
 peak memory is the peak resident set size, in GB of 10^9 bytes. Single runs: they say nothing about the speed of other tools.
 

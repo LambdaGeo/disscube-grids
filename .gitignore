@@ -2,3 +2,6 @@ data/
 images/
 __pycache__/
 .venv/
+*.pid
+nohup.out
+/env.txt

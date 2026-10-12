@@ -1,0 +1,85 @@
+{
+  "pipeline": {
+    "file": "mapbiomas.toml",
+    "checksum": "sha256:2cf54bc85fba673f99538c9595b336437e8afb3d60d7b678eb8e586466380fdc",
+    "name": "MapBiomas collection 11, 5.28 km grid of Brazil"
+  },
+  "started": "2026-10-12T10:23:14+00:00",
+  "finished": "2026-10-12T12:07:08+00:00",
+  "grid": "brasil_5km",
+  "sources": [
+    {
+      "id": "lulc_2000",
+      "type": "mapbiomas",
+      "file": "data/mapbiomas/raw/lulc_2000.tif",
+      "checksum": "sha256:ad6f0a6aa70b8d8963381d66d63bd82fa1b82b8ae90cb02c1b94f9cbe5c2ad2f",
+      "time": 2000
+    }
+  ],
+  "derived": [
+    {
+      "target": "forest_vegetation",
+      "source": "lulc_2000",
+      "spec_hash": "9ed79ef90e4692028ead48efc3dfd8919478c538704693c2b5a03296db4e3b33",
+      "times": [
+        2000
+      ],
+      "file": "data/mapbiomas/store/derived/brasil_5km/global/9ed79ef90e4692028ead48efc3dfd8919478c538704693c2b5a03296db4e3b33/forest_vegetation.zarr"
+    },
+    {
+      "target": "country_vegetation",
+      "source": "lulc_2000",
+      "spec_hash": "25d9e1cea6c9d0c9ad5a641e695a9437425853d281525245ce39c6cb46fd6277",
+      "times": [
+        2000
+      ],
+      "file": "data/mapbiomas/store/derived/brasil_5km/global/25d9e1cea6c9d0c9ad5a641e695a9437425853d281525245ce39c6cb46fd6277/country_vegetation.zarr"
+    },
+    {
+      "target": "pasture_management",
+      "source": "lulc_2000",
+      "spec_hash": "817ddda622bb62cf5144bdc5fde1a74742ae6d8bcd6f7f026a20aee3aa655f65",
+      "times": [
+        2000
+      ],
+      "file": "data/mapbiomas/store/derived/brasil_5km/global/817ddda622bb62cf5144bdc5fde1a74742ae6d8bcd6f7f026a20aee3aa655f65/pasture_management.zarr"
+    },
+    {
+      "target": "agricultural",
+      "source": "lulc_2000",
+      "spec_hash": "bbb92692868bb40faf5755de72152ffdb5ad95b863cbadae3fee777a02d93c19",
+      "times": [
+        2000
+      ],
+      "file": "data/mapbiomas/store/derived/brasil_5km/global/bbb92692868bb40faf5755de72152ffdb5ad95b863cbadae3fee777a02d93c19/agricultural.zarr"
+    },
+    {
+      "target": "mosaic_of_occupations",
+      "source": "lulc_2000",
+      "spec_hash": "f401a0a066e7e27d5bc547b85333d44d4953dde8b12398fec71f71013e775c47",
+      "times": [
+        2000
+      ],
+      "file": "data/mapbiomas/store/derived/brasil_5km/global/f401a0a066e7e27d5bc547b85333d44d4953dde8b12398fec71f71013e775c47/mosaic_of_occupations.zarr"
+    },
+    {
+      "target": "forestry",
+      "source": "lulc_2000",
+      "spec_hash": "358dc59a78b7f7285dd97d7563cf3c6590a7d2ae0b436b826c0035ee707b1943",
+      "times": [
+        2000
+      ],
+      "file": "data/mapbiomas/store/derived/brasil_5km/global/358dc59a78b7f7285dd97d7563cf3c6590a7d2ae0b436b826c0035ee707b1943/forestry.zarr"
+    },
+    {
+      "target": "others",
+      "source": "lulc_2000",
+      "spec_hash": "f8b29aa05b60b47d8f28f8e6bb0a8aa274a38821715128c2553a9738cca366b0",
+      "times": [
+        2000
+      ],
+      "file": "data/mapbiomas/store/derived/brasil_5km/global/f8b29aa05b60b47d8f28f8e6bb0a8aa274a38821715128c2553a9738cca366b0/others.zarr"
+    }
+  ],
+  "exported": "data/mapbiomas_5k.tif"
+}
