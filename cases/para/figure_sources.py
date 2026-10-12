@@ -1,12 +1,13 @@
 """One figure with the open sources of the state of Pará on the 5 km grid of `sources.toml`.
 
     python figure_sources.py [cube.tif] [--bdc bdc_ndvi.tif] [--year 2024] [--out ../../docs/figures/para_sources.png]
-                             [--state-zip PA_UF_2025.zip] [--title "Pará: ..."]
+                             [--state-zip FILE.zip] [--title "Pará: ..."]
 
 (a) MapBiomas: the level-1 class that covers most of each cell (`l1_class`: Forest, Herbaceous and shrubby
 vegetation, Farming, Non vegetated area, Water). (b) PRODES: the class that covers most of the cell (`prodes_class`:
 Forest, Deforested up to the year, Other, Water). (c) Brazil Data Cube: MODIS NDVI, only when --bdc gives the cube of
-bdc_ndvi.toml. Cells outside the state (IBGE boundary, PA_UF_2025.zip, from https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2025/UFs/PA/PA_UF_2025.zip) are masked.
+bdc_ndvi.toml. Cells outside the state are masked with the IBGE boundary (territorial mesh 2025), downloaded once into the
+DisSCube cache and checked against its SHA-256; --state-zip gives a local copy instead.
 """
 import argparse
 from pathlib import Path
@@ -41,6 +42,23 @@ def band(ds, name):
     return a
 
 
+STATE_URL = ("https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/"
+             "municipio_2025/UFs/PA/PA_UF_2025.zip")
+STATE_SHA256 = "f01247e31debb8a11bada4d22cdfaf621cacc7a0f80f9248cc4865719bad622c"
+
+
+def state_boundary(local=None):
+    """The IBGE boundary of Pará: a local file, or the download kept in the DisSCube cache (verified by hash)."""
+    if local:
+        return local
+    import os
+
+    import pooch
+    root = os.environ.get("DISSCUBE_CACHE_DIR") or os.environ.get("DISSCUBE_CACHE")
+    cache = Path(root) / "raw" if root else Path(pooch.os_cache("disscube")) / "raw"
+    return pooch.retrieve(STATE_URL, known_hash=f"sha256:{STATE_SHA256}", fname="PA_UF_2025.zip", path=cache)
+
+
 def load(path, name, state_zip):
     import geopandas as gpd
     with rasterio.open(path) as ds:
@@ -58,9 +76,10 @@ def main():
     ap.add_argument("--bdc", default=None, help="GeoTIFF of bdc_ndvi.toml (adds the NDVI panel)")
     ap.add_argument("--year", default="2024")
     ap.add_argument("--out", default=str(HERE.parent.parent / "docs" / "figures" / "para_sources.png"))
-    ap.add_argument("--state-zip", default=str(HERE / "PA_UF_2025.zip"), help="state boundary (IBGE shapefile in a zip)")
+    ap.add_argument("--state-zip", default=None, help="a local copy of the state boundary (IBGE shapefile in a zip); default: download it")
     ap.add_argument("--title", default=None, help="title above the panels (none by default: the caption of the article says it)")
     a = ap.parse_args()
+    a.state_zip = state_boundary(a.state_zip)
 
     l1, inside, ext = load(a.cube, f"l1_class_{a.year}", a.state_zip)
     pr, _, _ = load(a.cube, f"prodes_class_{a.year}", a.state_zip)

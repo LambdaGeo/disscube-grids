@@ -88,7 +88,7 @@ stops for lack of memory; the same file on the Acre (430 million pixels, 1 km) r
   water (hydrography, kept apart by `water = 4` in `[source.codes]` of the source; without it the default map folds it into other; clouds are no data). For the deforested share, `percentage` with `class_code = 2`.
 - `figure_sources.py` draws the sources side by side (`docs/figures/para_sources.png`): (a) MapBiomas level-1 land use, (b) PRODES classes and,
   with `--bdc` pointing to the GeoTIFF of `bdc_ndvi.toml`, (c) the BDC NDVI. Cells outside the state are masked using the IBGE
-  boundary ([`PA_UF_2025.zip`](https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2025/UFs/PA/PA_UF_2025.zip), IBGE territorial mesh 2025, kept in the folder).
+  boundary ([`PA_UF_2025.zip`](https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2025/UFs/PA/PA_UF_2025.zip), IBGE territorial mesh 2025), which the script downloads once into the DisSCube cache and checks against its SHA-256 (`--state-zip` gives a local copy); the file is not kept in the repository.
 - `bdc_ndvi.toml` is the Brazil Data Cube NDVI on the same grid (dry season 2020), from the MODIS cube (`mod13q1-6.1`, 231 m): the
   Landsat cube (30 m) over the whole state does not fit, because the BDC adapter reads every scene of the period whole. Run it
   (`./run.sh run bdc_ndvi`, network) and `./run.sh plot sources` adds it as panel (c). The collection id and the asset name are those of the
