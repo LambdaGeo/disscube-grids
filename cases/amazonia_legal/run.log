@@ -1,0 +1,49 @@
+nohup: ignoring input
+pipeline  : prodes.toml  (sha256:b4e76d3361f6…)
+grid      : amazonia_legal  5280 EPSG:10857
+sources   : 2
+  - prodes_2008              prodes
+  - prodes_2024              prodes
+variables : 4
+  - prodes_deforested_pct    percentage(2) <- prodes_2008
+  - prodes_deforested_pct    percentage(2) <- prodes_2024
+  - prodes_forest_pct        percentage(1) <- prodes_2008
+  - prodes_forest_pct        percentage(1) <- prodes_2024
+OK
+pipeline  : prodes.toml  (sha256:b4e76d3361f6…)
+grid      : amazonia_legal  5280 EPSG:10857
+sources   : 2
+  - prodes_2008              prodes
+  - prodes_2024              prodes
+variables : 4
+  - prodes_deforested_pct    percentage(2) <- prodes_2008
+  - prodes_deforested_pct    percentage(2) <- prodes_2024
+  - prodes_forest_pct        percentage(1) <- prodes_2008
+  - prodes_forest_pct        percentage(1) <- prodes_2024
+workspace : /home/sergio/develop/github/lambdageo/disscube-grids/cases/amazonia_legal/data/prodes
+derived   : 4 products on amazonia_legal
+exported  : /home/sergio/develop/github/lambdageo/disscube-grids/cases/amazonia_legal/data/prodes.tif
+record    : /home/sergio/develop/github/lambdageo/disscube-grids/cases/amazonia_legal/data/prodes/run.json
+	Command being timed: "./run.sh run"
+	User time (seconds): 1457.09
+	System time (seconds): 71.84
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 25:41.86
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 2869912
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 159
+	Minor (reclaiming a frame) page faults: 31026818
+	Voluntary context switches: 11746
+	Involuntary context switches: 30653
+	Swaps: 0
+	File system inputs: 1142904
+	File system outputs: 371912
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
