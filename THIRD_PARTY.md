@@ -22,6 +22,8 @@ images are adaptations of the data and follow the licence of their most restrict
 
 - `brasil_mapbiomas.png`: MapBiomas, CC BY 4.0.
 - `amazonia_prodes.png`: PRODES, CC BY-SA 4.0 (credit INPE / PRODES; share alike).
+- `ilha_maranhao_mapbiomas.png`: MapBiomas, CC BY 4.0.
+- `br163_prodes.png`: PRODES, CC BY-SA 4.0 (credit INPE / PRODES; share alike).
 - `para_sources.png`: MapBiomas, PRODES and MODIS NDVI, so CC BY-SA 4.0.
 
 Reuse of a figure must keep the credit to the providers. A figure that shows only Landsat from the BDC would

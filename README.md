@@ -24,7 +24,11 @@ except `para`, whose figure of three sources side by side is drawn by `cases/par
 MapBiomas (collection 11) on the 300 m BDC-snapped grid: 3,083 of 3,422 cells have data; urban share
 41.4 % (2000) → 47.5 % (2020), forest 22.8 % → 19.4 %, mangrove 4.1 % → 4.5 %, the same figures
 as the earlier run in `disscube-recipes`. It takes about 6 s after the download.
-`./run.sh plot` draws every band with `disscube plot` (`cases/ilha_maranhao/images/bdc_mapbiomas.png`, git-ignored).
+![MapBiomas on the island, 2020](docs/figures/ilha_maranhao_mapbiomas.png)
+
+The figure shows three MapBiomas bands (urban, forest and mangrove share, 2020; MapBiomas, CC BY 4.0), drawn with
+`disscube plot data/bdc_mapbiomas.tif -o ../../docs/figures/ilha_maranhao_mapbiomas.png --bands urban_pct_2020 forest_pct_2020 mangrove_pct_2020 --cols 3 --shared-colorbar --crop`.
+`./run.sh plot` draws every band (`cases/ilha_maranhao/images/bdc_mapbiomas.png`, git-ignored).
 
 PRODES (edition `prodes_amazonia_legal_2025_v20260408`) returns data in 2,897 of the 3,422 cells,
 so the island is inside its domain. **It is not a good demonstration**: the south-west shows a
@@ -36,7 +40,10 @@ built from three sources in one file; PRODES is shown as a useful map on `cases/
 PRODES on the BR-163 near Mojuí dos Campos (500 m grid, 94 × 86 cells, 7,997 of 8,084 cells with data,
 about 5 s after the download): deforested share 18.1 % (2008) → 20.1 % (2016) → 20.5 % (2024); forest
 81.6 % → 79.5 % → 79.2 %. The maps show the fishbone pattern of the road's side roads.
-`./run.sh plot` draws the bands with `disscube plot` (`cases/br163/images/prodes.png`).
+![PRODES on the BR-163](docs/figures/br163_prodes.png)
+
+Figure: deforested and forest share, 2008, 2016 and 2024 (PRODES/INPE, CC BY-SA 4.0), drawn with `disscube plot data/prodes.tif -o ../../docs/figures/br163_prodes.png --cols 3 --shared-colorbar --crop`.
+`./run.sh plot` writes the same bands to `cases/br163/images/prodes.png` (git-ignored).
 
 ### Three sources on one grid (BR-163)
 
