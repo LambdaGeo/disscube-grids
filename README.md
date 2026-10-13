@@ -7,7 +7,8 @@ grid, a few lines of shell to run it, and the maps it produces.
 The point is the **grid construction**: each pipeline file states the grid (snapped to the
 [Brazil Data Cube](https://brazil-data-cube.github.io/) Albers mesh), the sources and how each
 variable is derived. There is no case-specific code in the pipelines. The maps are drawn with `disscube plot` (`amazonia_legal`, `brasil_5km`) or with a
-small figure script in the folder (`ilha_maranhao`, `br163`, `para`).
+small figure script in the folder (`ilha_maranhao`, `br163`, `para`); `ilha_maranhao` and `br163` also have a `plot` step that
+calls `common/plot_cube.py`.
 
 | Area | Pipeline | Sources | Grid | Status |
 |---|---|---|---|---|
@@ -148,7 +149,8 @@ copied to `docs/figures/`).
 ## Notes
 
 - Data are fetched from the providers when a case runs; the repository holds text and a few images.
-  Check each provider's terms before reusing the data.
+  Check each provider's terms before reusing the data (summary in [THIRD_PARTY.md](THIRD_PARTY.md)).
 - BDC and PRODES results depend on the catalog contents and on the PRODES edition when the case is
   run; each run records them in `run.json` and in `*.provenance.json`.
-- Code and configuration: MIT.
+- Code and configuration: MIT. The figures in `docs/figures/` follow the licence of the data they show
+  (CC BY 4.0 for MapBiomas; CC BY-SA 4.0 where PRODES appears). Sources, licences and how to cite them: [THIRD_PARTY.md](THIRD_PARTY.md).
