@@ -6,9 +6,8 @@ grid, a few lines of shell to run it, and the maps it produces.
 
 The point is the **grid construction**: each pipeline file states the grid (snapped to the
 [Brazil Data Cube](https://brazil-data-cube.github.io/) Albers mesh), the sources and how each
-variable is derived. There is no case-specific code in the pipelines. The maps are drawn with `disscube plot` (`amazonia_legal`, `brasil_5km`) or with a
-small figure script in the folder (`ilha_maranhao`, `br163`, `para`); `ilha_maranhao` and `br163` also have a `plot` step that
-calls `common/plot_cube.py`.
+variable is derived. There is no case-specific code in the pipelines. The maps are drawn with `disscube plot` (`amazonia_legal`, `brasil_5km`, `ilha_maranhao`, `br163`),
+except `para`, whose figure of three sources side by side is drawn by `cases/para/figure_sources.py`.
 
 | Area | Pipeline | Sources | Grid | Status |
 |---|---|---|---|---|
@@ -25,11 +24,7 @@ calls `common/plot_cube.py`.
 MapBiomas (collection 11) on the 300 m BDC-snapped grid: 3,083 of 3,422 cells have data; urban share
 41.4 % (2000) → 47.5 % (2020), forest 22.8 % → 19.4 %, mangrove 4.1 % → 4.5 %, the same figures
 as the earlier run in `disscube-recipes`. It takes about 6 s after the download.
-![MapBiomas on the island](docs/figures/ilha_maranhao_mapbiomas.png)
-
-`cases/ilha_maranhao/figure_sources.py` draws the island with the BDC indices (NDVI and MNDWI, when `bdc_mapbiomas.toml` has been
-run) and the MapBiomas land use, urban and mangrove shares and the urban change from 2000 to 2020
-(`python figure_sources.py` in `cases/ilha_maranhao/`; the PRODES maps are left out, see below).
+`./run.sh plot` draws every band with `disscube plot` (`cases/ilha_maranhao/images/bdc_mapbiomas.png`, git-ignored).
 
 PRODES (edition `prodes_amazonia_legal_2025_v20260408`) returns data in 2,897 of the 3,422 cells,
 so the island is inside its domain. **It is not a good demonstration**: the south-west shows a
@@ -37,22 +32,19 @@ straight-edged block that is entirely "deforested" in every year, which looks li
 the PRODES domain edge (the island lies at the limit of the Legal Amazon) and not like land cover.
 The PRODES source is kept in `bdc_mapbiomas.toml` (variables prefixed `prodes_`) as the record of this test, so the island is
 built from three sources in one file; PRODES is shown as a useful map on `cases/br163/` instead.
-![PRODES on the island](docs/figures/ilha_maranhao_prodes.png)
 
 PRODES on the BR-163 near Mojuí dos Campos (500 m grid, 94 × 86 cells, 7,997 of 8,084 cells with data,
 about 5 s after the download): deforested share 18.1 % (2008) → 20.1 % (2016) → 20.5 % (2024); forest
 81.6 % → 79.5 % → 79.2 %. The maps show the fishbone pattern of the road's side roads.
-![PRODES on the BR-163](docs/figures/br163_prodes.png)
+`./run.sh plot` draws the bands with `disscube plot` (`cases/br163/images/prodes.png`).
 
 ### Three sources on one grid (BR-163)
 
 `cases/br163/bdc_mapbiomas.toml` uses the same area and 500 m grid as `cases/br163/prodes.toml` (the LuccME Lab15 cellular
 space), so that the Brazil Data Cube (Landsat NDVI, dry season 2020), MapBiomas (collection 11) and PRODES can be read
-cell by cell. `cases/br163/figure_sources.py` draws them together (forest share from MapBiomas and from PRODES, pasture and
-deforested share, and the difference between the two forest shares). It is an illustration of how the same declarative
+cell by cell. `./run.sh plot bdc_mapbiomas` draws their bands with `disscube plot`. It is an illustration of how the same declarative
 file starts from different open sources, not a validation: the sources define forest differently and are not expected to
-agree cell by cell. The BDC panel stays empty until `bdc_mapbiomas.toml` has been run.
-![The three sources on the BR-163](docs/figures/br163_sources.png)
+agree cell by cell.
 
 Two things found while running, both in DisSCube 0.5.0: `disscube export` as a separate command
 looks the grid up by its name (`ilha_do_maranhao`) while the cube stores `ilha_do_maranhao/300m`, and
@@ -127,7 +119,7 @@ source (one per class). GeoTIFF SHA-256 `3d7ef2f6…92ff72`. The figure is `./ru
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/ilha_maranhao && ./run.sh all            # validate, run (network), export GeoTIFF, plot
-cd ../br163 && ./run.sh run prodes && ./run.sh run bdc_mapbiomas && python figure_sources.py   # three sources on one grid
+cd ../br163 && ./run.sh run prodes && ./run.sh run bdc_mapbiomas && ./run.sh plot bdc_mapbiomas   # three sources on one grid
 ./run.sh validate bdc_mapbiomas             # any step, any pipeline of the folder
 ```
 
@@ -136,7 +128,7 @@ Each case keeps the record of its run: `run.log` (with the `time -v` summary), `
 Times and memory were measured on one desktop computer (Intel Core i7-7700T at 2.90 GHz, 15 GiB of RAM, Ubuntu, Python 3.12.3) with `/usr/bin/time -v`;
 peak memory is the peak resident set size, in GB of 10^9 bytes. Single runs: they say nothing about the speed of other tools.
 
-Maps are written to `<area>/images/<pipeline>/` (git-ignored; the ones shown in this README are
+Quick looks are written to `<area>/images/<pipeline>.png` (git-ignored; the ones shown in this README are
 copied to `docs/figures/`).
 
 ## What each area tests
