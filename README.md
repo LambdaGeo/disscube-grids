@@ -60,9 +60,10 @@ agree cell by cell.
 Run of 14 Oct 2026 (DisSCube 0.6.0): 50.9 s, peak memory 0.57 GB (20 % of one CPU core; the rest is waiting for the STAC). The Landsat NDVI of the dry season of 2020 has data in all 8,084 cells (mean 0.81, 0.26 to 0.88).
 MapBiomas gives forest 88.0 % (2008) → 71.2 % (2024) and pasture 7.8 % → 20.1 %; PRODES forest is 85.2 % → 67.2 % (previous paragraph). The sources move in the same direction and differ in level, as their definitions of forest differ.
 
-Two things found while running, both in DisSCube 0.5.0: `disscube export` as a separate command
+Two things found while running, in DisSCube 0.5.0: `disscube export` as a separate command
 looks the grid up by its name (`ilha_do_maranhao`) while the cube stores `ilha_do_maranhao/300m`, and
-fails; `run --output` exports correctly, which is what `run.sh` uses. And the process ended with an
+fails (`Derived variable not found: ndvi_mean on grid ilha_do_maranhao`); it still does in 0.6.0 (checked on 14 Oct 2026).
+`run --output` exports correctly, which is what `run.sh` uses. And the process ended with an
 `Error in sys.excepthook` message after the work was done (output complete); its cause, a source raster that was
 never closed, is fixed in 0.6.0.
 
