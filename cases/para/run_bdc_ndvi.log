@@ -8,18 +8,18 @@ OK
 INFO disscube.models.grid: [grid] registered 'para/5km'  bbox(BDC Albers)=[4445000, 10225000, 5900000, 11625000]  bbox(geo)=lon[-59.14,-46.04] lat[-9.95,2.75]  size=280×291 cells  (5000 m pixels)
 INFO disscube.pipeline.runner: source ndvi (bdc)
 INFO disscube.sources.bdc: [bdc] mod13q1-6.1: 28 items over [-58.9, -9.85, -46.06, 2.64] in 2020-07-01/2020-09-30
-INFO disscube.sources._raster: registered ndvi (sha256:fe558eb6) — provenance in /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/bdc_ndvi/raw/ndvi.provenance.json
-INFO disscube.pipeline.runner: exported GeoTIFF to /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/bdc_ndvi.tif (1 variables)
+INFO disscube.sources._raster: registered ndvi (sha256:fe558eb6) — provenance in <repo>/cases/para/data/bdc_ndvi/raw/ndvi.provenance.json
+INFO disscube.pipeline.runner: exported GeoTIFF to <repo>/cases/para/data/bdc_ndvi.tif (1 variables)
 pipeline  : bdc_ndvi.toml  (sha256:665166117e5b…)
 grid      : para  5000 m, BDC Albers
 sources   : 1
   - ndvi                     bdc
 variables : 1
   - ndvi_mean                mean <- ndvi
-workspace : /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/bdc_ndvi
+workspace : <repo>/cases/para/data/bdc_ndvi
 derived   : 1 products on para/5km
-exported  : /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/bdc_ndvi.tif
-record    : /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/bdc_ndvi/run.json
+exported  : <repo>/cases/para/data/bdc_ndvi.tif
+record    : <repo>/cases/para/data/bdc_ndvi/run.json
 	Command being timed: "./run.sh run bdc_ndvi"
 	User time (seconds): 28.53
 	System time (seconds): 4.36

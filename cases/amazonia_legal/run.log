@@ -11,9 +11,9 @@ variables : 4
   - prodes_forest_pct        percentage(1) <- prodes_2024
 OK
 INFO disscube.pipeline.runner: source prodes_2008 (prodes)
-INFO disscube.sources._raster: registered prodes_2008 (sha256:4c6ec5c9) — provenance in /home/sergio/develop/github/lambdageo/disscube-grids/cases/amazonia_legal/data/prodes/raw/prodes_2008.provenance.json
+INFO disscube.sources._raster: registered prodes_2008 (sha256:4c6ec5c9) — provenance in <repo>/cases/amazonia_legal/data/prodes/raw/prodes_2008.provenance.json
 INFO disscube.pipeline.runner: source prodes_2024 (prodes)
-INFO disscube.sources._raster: registered prodes_2024 (sha256:fa253908) — provenance in /home/sergio/develop/github/lambdageo/disscube-grids/cases/amazonia_legal/data/prodes/raw/prodes_2024.provenance.json
+INFO disscube.sources._raster: registered prodes_2024 (sha256:fa253908) — provenance in <repo>/cases/amazonia_legal/data/prodes/raw/prodes_2024.provenance.json
 INFO disscube.client.cube_client: block 1/496 of grid amazonia_legal (33 rows x 22 cols)
 INFO disscube.client.cube_client: block 2/496 of grid amazonia_legal (33 rows x 22 cols)
 INFO disscube.client.cube_client: block 3/496 of grid amazonia_legal (33 rows x 22 cols)
@@ -1998,7 +1998,7 @@ INFO disscube.client.cube_client: block 493/496 of grid amazonia_legal (25 rows 
 INFO disscube.client.cube_client: block 494/496 of grid amazonia_legal (25 rows x 22 cols)
 INFO disscube.client.cube_client: block 495/496 of grid amazonia_legal (25 rows x 22 cols)
 INFO disscube.client.cube_client: block 496/496 of grid amazonia_legal (25 rows x 20 cols)
-INFO disscube.pipeline.runner: exported GeoTIFF to /home/sergio/develop/github/lambdageo/disscube-grids/cases/amazonia_legal/data/prodes.tif (4 variables)
+INFO disscube.pipeline.runner: exported GeoTIFF to <repo>/cases/amazonia_legal/data/prodes.tif (4 variables)
 pipeline  : prodes.toml  (sha256:b4e76d3361f6…)
 grid      : amazonia_legal  5280 EPSG:10857
 sources   : 2
@@ -2009,10 +2009,10 @@ variables : 4
   - prodes_deforested_pct    percentage(2) <- prodes_2024
   - prodes_forest_pct        percentage(1) <- prodes_2008
   - prodes_forest_pct        percentage(1) <- prodes_2024
-workspace : /home/sergio/develop/github/lambdageo/disscube-grids/cases/amazonia_legal/data/prodes
+workspace : <repo>/cases/amazonia_legal/data/prodes
 derived   : 4 products on amazonia_legal
-exported  : /home/sergio/develop/github/lambdageo/disscube-grids/cases/amazonia_legal/data/prodes.tif
-record    : /home/sergio/develop/github/lambdageo/disscube-grids/cases/amazonia_legal/data/prodes/run.json
+exported  : <repo>/cases/amazonia_legal/data/prodes.tif
+record    : <repo>/cases/amazonia_legal/data/prodes/run.json
 	Command being timed: "./run.sh run"
 	User time (seconds): 1560.77
 	System time (seconds): 71.04

@@ -9,9 +9,9 @@ variables : 2
 OK
 INFO disscube.models.grid: [grid] registered 'para/5km'  bbox(BDC Albers)=[4445000, 10225000, 5900000, 11625000]  bbox(geo)=lon[-59.14,-46.04] lat[-9.95,2.75]  size=280×291 cells  (5000 m pixels)
 INFO disscube.pipeline.runner: source lulc_2024 (mapbiomas)
-INFO disscube.sources._raster: registered lulc_2024 (sha256:7efa3410) — provenance in /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/sources/raw/lulc_2024.provenance.json
+INFO disscube.sources._raster: registered lulc_2024 (sha256:7efa3410) — provenance in <repo>/cases/para/data/sources/raw/lulc_2024.provenance.json
 INFO disscube.pipeline.runner: source prodes_2024 (prodes)
-INFO disscube.sources._raster: registered prodes_2024 (sha256:fab3016d) — provenance in /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/sources/raw/prodes_2024.provenance.json
+INFO disscube.sources._raster: registered prodes_2024 (sha256:fab3016d) — provenance in <repo>/cases/para/data/sources/raw/prodes_2024.provenance.json
 INFO disscube.client.cube_client: block 1/64 of grid para/5km (35 rows x 37 cols)
 INFO disscube.client.cube_client: block 2/64 of grid para/5km (35 rows x 37 cols)
 INFO disscube.client.cube_client: block 3/64 of grid para/5km (35 rows x 37 cols)
@@ -140,7 +140,7 @@ INFO disscube.client.cube_client: block 61/64 of grid para/5km (35 rows x 37 col
 INFO disscube.client.cube_client: block 62/64 of grid para/5km (35 rows x 37 cols)
 INFO disscube.client.cube_client: block 63/64 of grid para/5km (35 rows x 37 cols)
 INFO disscube.client.cube_client: block 64/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.pipeline.runner: exported GeoTIFF to /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/sources.tif (2 variables)
+INFO disscube.pipeline.runner: exported GeoTIFF to <repo>/cases/para/data/sources.tif (2 variables)
 pipeline  : sources.toml  (sha256:7b8f4e688fc8…)
 grid      : para  5000 m, BDC Albers
 sources   : 2
@@ -149,10 +149,10 @@ sources   : 2
 variables : 2
   - l1_class                 majority {'groups': {'1': [1, 3, 4, 5, 6, 49], '2': [10, 11, 12, 13, 29, 32, 50], '3': [9, 14, 15, 18, 19, 20, 21, 35, 36, 39, 40, 41, 46, 47, 48, 62], '4': [22, 23, 24, 25, 30, 75, 91], '5': [26, 31, 33]}} <- lulc_2024
   - prodes_class             majority <- prodes_2024
-workspace : /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/sources
+workspace : <repo>/cases/para/data/sources
 derived   : 2 products on para/5km
-exported  : /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/sources.tif
-record    : /home/sergio/develop/github/lambdageo/disscube-grids/cases/para/data/sources/run.json
+exported  : <repo>/cases/para/data/sources.tif
+record    : <repo>/cases/para/data/sources/run.json
 	Command being timed: "./run.sh run sources"
 	User time (seconds): 243.10
 	System time (seconds): 9.46

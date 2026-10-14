@@ -24,10 +24,10 @@ variables : 7
   - mosaic_of_occupations    percentage([21]) <- lulc_2000
   - forestry                 percentage([9]) <- lulc_2000
   - others                   percentage([10, 14, 22, 23, 24, 25, 26, 27, 29, 30, 31, 32, 33, 49, 50, 75, 91]) <- lulc_2000
-workspace : /home/sergio/develop/github/lambdageo/disscube-grids/cases/brasil_5km/data/mapbiomas
+workspace : <repo>/cases/brasil_5km/data/mapbiomas
 derived   : 7 products on brasil_5km
-exported  : /home/sergio/develop/github/lambdageo/disscube-grids/cases/brasil_5km/data/mapbiomas_5k.tif
-record    : /home/sergio/develop/github/lambdageo/disscube-grids/cases/brasil_5km/data/mapbiomas/run.json
+exported  : <repo>/cases/brasil_5km/data/mapbiomas_5k.tif
+record    : <repo>/cases/brasil_5km/data/mapbiomas/run.json
 	Command being timed: "./run.sh run"
 	User time (seconds): 5796.05
 	System time (seconds): 155.29
