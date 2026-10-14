@@ -1,0 +1,60 @@
+pipeline  : bdc_mapbiomas.toml  (sha256:55f8a8b1432e…)
+grid      : ilha_do_maranhao  300 m, BDC Albers
+sources   : 7
+  - ndvi                     bdc
+  - mndwi                    bdc
+  - lulc_2000                mapbiomas
+  - lulc_2020                mapbiomas
+  - prodes_2008              prodes
+  - prodes_2016              prodes
+  - prodes_2024              prodes
+variables : 16
+  - ndvi_mean                mean <- ndvi
+  - mndwi_mean               mean <- mndwi
+  - landuse                  majority <- lulc_2000
+  - landuse                  majority <- lulc_2020
+  - urban_pct                percentage(24) <- lulc_2000
+  - urban_pct                percentage(24) <- lulc_2020
+  - forest_pct               percentage(3) <- lulc_2000
+  - forest_pct               percentage(3) <- lulc_2020
+  - mangrove_pct             percentage(5) <- lulc_2000
+  - mangrove_pct             percentage(5) <- lulc_2020
+  - prodes_deforested_pct    percentage(2) <- prodes_2008
+  - prodes_deforested_pct    percentage(2) <- prodes_2016
+  - prodes_deforested_pct    percentage(2) <- prodes_2024
+  - prodes_forest_pct        percentage(1) <- prodes_2008
+  - prodes_forest_pct        percentage(1) <- prodes_2016
+  - prodes_forest_pct        percentage(1) <- prodes_2024
+OK
+pipeline  : bdc_mapbiomas.toml  (sha256:55f8a8b1432e…)
+grid      : ilha_do_maranhao  300 m, BDC Albers
+sources   : 7
+  - ndvi                     bdc
+  - mndwi                    bdc
+  - lulc_2000                mapbiomas
+  - lulc_2020                mapbiomas
+  - prodes_2008              prodes
+  - prodes_2016              prodes
+  - prodes_2024              prodes
+variables : 16
+  - ndvi_mean                mean <- ndvi
+  - mndwi_mean               mean <- mndwi
+  - landuse                  majority <- lulc_2000
+  - landuse                  majority <- lulc_2020
+  - urban_pct                percentage(24) <- lulc_2000
+  - urban_pct                percentage(24) <- lulc_2020
+  - forest_pct               percentage(3) <- lulc_2000
+  - forest_pct               percentage(3) <- lulc_2020
+  - mangrove_pct             percentage(5) <- lulc_2000
+  - mangrove_pct             percentage(5) <- lulc_2020
+  - prodes_deforested_pct    percentage(2) <- prodes_2008
+  - prodes_deforested_pct    percentage(2) <- prodes_2016
+  - prodes_deforested_pct    percentage(2) <- prodes_2024
+  - prodes_forest_pct        percentage(1) <- prodes_2008
+  - prodes_forest_pct        percentage(1) <- prodes_2016
+  - prodes_forest_pct        percentage(1) <- prodes_2024
+workspace : /home/sergio/develop/github/lambdageo/disscube-grids/cases/ilha_maranhao/data/bdc_mapbiomas
+derived   : 16 products on ilha_do_maranhao/300m
+exported  : /home/sergio/develop/github/lambdageo/disscube-grids/cases/ilha_maranhao/data/bdc_mapbiomas.tif
+record    : /home/sergio/develop/github/lambdageo/disscube-grids/cases/ilha_maranhao/data/bdc_mapbiomas/run.json
+figure    : /home/sergio/develop/github/lambdageo/disscube-grids/cases/ilha_maranhao/images/bdc_mapbiomas.png
