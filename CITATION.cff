@@ -4,7 +4,7 @@ type: software
 title: "disscube-grids: building gridded variables from open data with DisSCube"
 abstract: "Study-area examples (pipeline files, run scripts, run records and maps) that build gridded variables, cellular spaces on the Brazil Data Cube Albers mesh, from MapBiomas, PRODES and Brazil Data Cube sources with DisSCube."
 version: 1.0.0
-date-released: 2026-10-13
+date-released: 2026-10-14
 license: MIT
 url: "https://github.com/LambdaGeo/disscube-grids"
 repository-code: "https://github.com/LambdaGeo/disscube-grids"
