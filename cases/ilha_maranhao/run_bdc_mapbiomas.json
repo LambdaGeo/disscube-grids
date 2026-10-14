@@ -1,0 +1,209 @@
+{
+  "disscube": "0.6.0",
+  "pipeline": {
+    "file": "<repo>/cases/ilha_maranhao/bdc_mapbiomas.toml",
+    "checksum": "sha256:55f8a8b1432ee8259bd1d5acf01b9a8b6e4dfcd46ad0bed0fa816d5635ab11ab",
+    "name": "Ilha do Maranhão — BDC Landsat drivers and MapBiomas land use"
+  },
+  "started": "2026-10-14T12:13:56+00:00",
+  "finished": "2026-10-14T12:14:50+00:00",
+  "grid": "ilha_do_maranhao/300m",
+  "sources": [
+    {
+      "id": "ndvi",
+      "type": "bdc",
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/raw/ndvi.tif",
+      "checksum": "sha256:44f4507e2461377b831f1a49677c5244348b1f47b15dcbaf0a53fc16dde6268c",
+      "time": 2020
+    },
+    {
+      "id": "mndwi",
+      "type": "bdc",
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/raw/mndwi.tif",
+      "checksum": "sha256:beeeb579d1d09e015473241c5068f0cd9b440ffe9960ed38cf8ed05834090fab",
+      "time": 2020
+    },
+    {
+      "id": "lulc_2000",
+      "type": "mapbiomas",
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/raw/lulc_2000.tif",
+      "checksum": "sha256:dfbd2a7388decf726fbaff3e8f569b74c9932e084b72279ea80563fffc806bdb",
+      "time": 2000
+    },
+    {
+      "id": "lulc_2020",
+      "type": "mapbiomas",
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/raw/lulc_2020.tif",
+      "checksum": "sha256:f569a4708d1cb873d9eb750947600c833f6091c2a8f2a2456eb9c4d1a39bb76e",
+      "time": 2020
+    },
+    {
+      "id": "prodes_2008",
+      "type": "prodes",
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/raw/prodes_2008.tif",
+      "checksum": "sha256:4a80ef648ac2faec2aa89adcdc6652f8368e965798cc0bdcd8354c763944a3de",
+      "time": 2008
+    },
+    {
+      "id": "prodes_2016",
+      "type": "prodes",
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/raw/prodes_2016.tif",
+      "checksum": "sha256:b30d4d0b588241ec572726dedf5dd06f7e490ecd98e8e4b9f4431e18e2bf1d9d",
+      "time": 2016
+    },
+    {
+      "id": "prodes_2024",
+      "type": "prodes",
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/raw/prodes_2024.tif",
+      "checksum": "sha256:2f9a41cb164200109c0fb51b75f1addbfbfae3ba4f775abce09792ab2160b3ed",
+      "time": 2024
+    }
+  ],
+  "derived": [
+    {
+      "target": "ndvi_mean",
+      "source": "ndvi",
+      "spec_hash": "0aebd7d9985f5bf748e0f193f0fb0bd66a666c8fd6312d438c2505bd2f33f054",
+      "times": [
+        2020
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/0aebd7d9985f5bf748e0f193f0fb0bd66a666c8fd6312d438c2505bd2f33f054/ndvi_mean.zarr"
+    },
+    {
+      "target": "mndwi_mean",
+      "source": "mndwi",
+      "spec_hash": "e0390c932f41ec0122a19ef9d29a44ad121ccd3e571b606d3627952f000f3f46",
+      "times": [
+        2020
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/e0390c932f41ec0122a19ef9d29a44ad121ccd3e571b606d3627952f000f3f46/mndwi_mean.zarr"
+    },
+    {
+      "target": "landuse",
+      "source": "lulc_2000",
+      "spec_hash": "ac75bf5c7cf2045ff8ee0261c1b0cad8e861e1baf530e86c763b6db5666f293c",
+      "times": [
+        2000
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/ac75bf5c7cf2045ff8ee0261c1b0cad8e861e1baf530e86c763b6db5666f293c/landuse.zarr"
+    },
+    {
+      "target": "landuse",
+      "source": "lulc_2020",
+      "spec_hash": "0bc320810d91f5307637423aff58a2b1092574a08afe6a00d64969b5a184638b",
+      "times": [
+        2020
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/0bc320810d91f5307637423aff58a2b1092574a08afe6a00d64969b5a184638b/landuse.zarr"
+    },
+    {
+      "target": "urban_pct",
+      "source": "lulc_2000",
+      "spec_hash": "13451d5f9070533691981dd62ebe0c996a04a5d0e0046ce5e19cd3f6b7e46f40",
+      "times": [
+        2000
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/13451d5f9070533691981dd62ebe0c996a04a5d0e0046ce5e19cd3f6b7e46f40/urban_pct.zarr"
+    },
+    {
+      "target": "urban_pct",
+      "source": "lulc_2020",
+      "spec_hash": "fd5acc96243b15f6701254f5537a39f42316a6608680899d9eb30374188ade32",
+      "times": [
+        2020
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/fd5acc96243b15f6701254f5537a39f42316a6608680899d9eb30374188ade32/urban_pct.zarr"
+    },
+    {
+      "target": "forest_pct",
+      "source": "lulc_2000",
+      "spec_hash": "da51a63434e7a1760774be4bd565483f8b61da12fe915f49c7c6ea965ec4b18c",
+      "times": [
+        2000
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/da51a63434e7a1760774be4bd565483f8b61da12fe915f49c7c6ea965ec4b18c/forest_pct.zarr"
+    },
+    {
+      "target": "forest_pct",
+      "source": "lulc_2020",
+      "spec_hash": "71ccf36d1d8471f09710a01e88adee1eccee4c34c126a48a68f260651db44f0e",
+      "times": [
+        2020
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/71ccf36d1d8471f09710a01e88adee1eccee4c34c126a48a68f260651db44f0e/forest_pct.zarr"
+    },
+    {
+      "target": "mangrove_pct",
+      "source": "lulc_2000",
+      "spec_hash": "4d7c1ddcf65e2c7616c663cec2091b2359675d1093d8f9115a8cb5a7d12e3dad",
+      "times": [
+        2000
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/4d7c1ddcf65e2c7616c663cec2091b2359675d1093d8f9115a8cb5a7d12e3dad/mangrove_pct.zarr"
+    },
+    {
+      "target": "mangrove_pct",
+      "source": "lulc_2020",
+      "spec_hash": "1ac636061c5279de34b871bc0d715c97c783710ee38b4ee6e3cc6dbb55c7aa4e",
+      "times": [
+        2020
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/1ac636061c5279de34b871bc0d715c97c783710ee38b4ee6e3cc6dbb55c7aa4e/mangrove_pct.zarr"
+    },
+    {
+      "target": "prodes_deforested_pct",
+      "source": "prodes_2008",
+      "spec_hash": "737733c2c946f2f73b23128c72e74dcba9576cf47c7085be753992b7ffa8b263",
+      "times": [
+        2008
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/737733c2c946f2f73b23128c72e74dcba9576cf47c7085be753992b7ffa8b263/prodes_deforested_pct.zarr"
+    },
+    {
+      "target": "prodes_deforested_pct",
+      "source": "prodes_2016",
+      "spec_hash": "6c3386e812e0ab0f3fa464a91cdd59da774d2fe09295824913621b584dbbbf76",
+      "times": [
+        2016
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/6c3386e812e0ab0f3fa464a91cdd59da774d2fe09295824913621b584dbbbf76/prodes_deforested_pct.zarr"
+    },
+    {
+      "target": "prodes_deforested_pct",
+      "source": "prodes_2024",
+      "spec_hash": "e84273139916bec8fb5d4fb104bf9a2ac4fe89fd912ee2e6d61b079bc8a0cfca",
+      "times": [
+        2024
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/e84273139916bec8fb5d4fb104bf9a2ac4fe89fd912ee2e6d61b079bc8a0cfca/prodes_deforested_pct.zarr"
+    },
+    {
+      "target": "prodes_forest_pct",
+      "source": "prodes_2008",
+      "spec_hash": "86a51fd42b2375586c3ef514c2e5d7b26f828961ee019c7cc3e059913cfb5286",
+      "times": [
+        2008
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/86a51fd42b2375586c3ef514c2e5d7b26f828961ee019c7cc3e059913cfb5286/prodes_forest_pct.zarr"
+    },
+    {
+      "target": "prodes_forest_pct",
+      "source": "prodes_2016",
+      "spec_hash": "0acb27e5fdea0998b6bd48535072442febd3efdfa3a5c7b03e24d93088826227",
+      "times": [
+        2016
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/0acb27e5fdea0998b6bd48535072442febd3efdfa3a5c7b03e24d93088826227/prodes_forest_pct.zarr"
+    },
+    {
+      "target": "prodes_forest_pct",
+      "source": "prodes_2024",
+      "spec_hash": "5a97c2c6ea0a8750468ae6c11278d8ca721a497b40512bfaa29a28a5d08acaee",
+      "times": [
+        2024
+      ],
+      "file": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas/store/derived/ilha_do_maranhao/300m/global/5a97c2c6ea0a8750468ae6c11278d8ca721a497b40512bfaa29a28a5d08acaee/prodes_forest_pct.zarr"
+    }
+  ],
+  "exported": "<repo>/cases/ilha_maranhao/data/bdc_mapbiomas.tif"
+}

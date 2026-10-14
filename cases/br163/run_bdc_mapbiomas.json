@@ -1,0 +1,100 @@
+{
+  "disscube": "0.6.0",
+  "pipeline": {
+    "file": "<repo>/cases/br163/bdc_mapbiomas.toml",
+    "checksum": "sha256:258e14b62d0174376f8e35a2fe273572183226627fbb915f0f14b0f1e2d80da5",
+    "name": "BR-163 (Pará) — BDC Landsat drivers and MapBiomas land use"
+  },
+  "started": "2026-10-14T12:14:52+00:00",
+  "finished": "2026-10-14T12:15:42+00:00",
+  "grid": "br163/500m",
+  "sources": [
+    {
+      "id": "ndvi",
+      "type": "bdc",
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/raw/ndvi.tif",
+      "checksum": "sha256:36de1bc3f66b8774a5a6d4573411f9f821d280d6b3ce3f9503e018f17f9dc0f6",
+      "time": 2020
+    },
+    {
+      "id": "lulc_2008",
+      "type": "mapbiomas",
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/raw/lulc_2008.tif",
+      "checksum": "sha256:0612a99da0684dc8f626c886a187082d62c0a6f3a3f4780858d31f40308d5b14",
+      "time": 2008
+    },
+    {
+      "id": "lulc_2024",
+      "type": "mapbiomas",
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/raw/lulc_2024.tif",
+      "checksum": "sha256:77a73ba8dcf50359a3d3bc8693037a2a61255a5bab1cafd085efa97684a3a5b0",
+      "time": 2024
+    }
+  ],
+  "derived": [
+    {
+      "target": "ndvi_mean",
+      "source": "ndvi",
+      "spec_hash": "3e5af84eaeacdd8b751f14340e947e20e2832dba728c178e21897fa59553505d",
+      "times": [
+        2020
+      ],
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/store/derived/br163/500m/global/3e5af84eaeacdd8b751f14340e947e20e2832dba728c178e21897fa59553505d/ndvi_mean.zarr"
+    },
+    {
+      "target": "landuse",
+      "source": "lulc_2008",
+      "spec_hash": "d41519b0dd46e5400a4c2126c2c0c23c7143040c175144c684aaa5b4b4ff0b67",
+      "times": [
+        2008
+      ],
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/store/derived/br163/500m/global/d41519b0dd46e5400a4c2126c2c0c23c7143040c175144c684aaa5b4b4ff0b67/landuse.zarr"
+    },
+    {
+      "target": "landuse",
+      "source": "lulc_2024",
+      "spec_hash": "01dd394745a8cd739e31dc754b62ca270d4d203c425f8c15323d07c97303e575",
+      "times": [
+        2024
+      ],
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/store/derived/br163/500m/global/01dd394745a8cd739e31dc754b62ca270d4d203c425f8c15323d07c97303e575/landuse.zarr"
+    },
+    {
+      "target": "forest_pct",
+      "source": "lulc_2008",
+      "spec_hash": "342744b7fedde4df7fd7a8c9d7fbe37eea603f8c0fed6eef1437d728357b4271",
+      "times": [
+        2008
+      ],
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/store/derived/br163/500m/global/342744b7fedde4df7fd7a8c9d7fbe37eea603f8c0fed6eef1437d728357b4271/forest_pct.zarr"
+    },
+    {
+      "target": "forest_pct",
+      "source": "lulc_2024",
+      "spec_hash": "691fa77224645f7094aef374c4176cb70c8dbd49f435ec8c97eafdfb16217fa3",
+      "times": [
+        2024
+      ],
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/store/derived/br163/500m/global/691fa77224645f7094aef374c4176cb70c8dbd49f435ec8c97eafdfb16217fa3/forest_pct.zarr"
+    },
+    {
+      "target": "pasture_pct",
+      "source": "lulc_2008",
+      "spec_hash": "0e630e14d88221f9ef24ccf41a9521cff7b06cca944389cabb99d4d71dc97538",
+      "times": [
+        2008
+      ],
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/store/derived/br163/500m/global/0e630e14d88221f9ef24ccf41a9521cff7b06cca944389cabb99d4d71dc97538/pasture_pct.zarr"
+    },
+    {
+      "target": "pasture_pct",
+      "source": "lulc_2024",
+      "spec_hash": "6d5f303a5c9f7386604bc63db912a796325b94b62a8ec7f8b0af8d5c056cf132",
+      "times": [
+        2024
+      ],
+      "file": "<repo>/cases/br163/data/bdc_mapbiomas/store/derived/br163/500m/global/6d5f303a5c9f7386604bc63db912a796325b94b62a8ec7f8b0af8d5c056cf132/pasture_pct.zarr"
+    }
+  ],
+  "exported": "<repo>/cases/br163/data/bdc_mapbiomas.tif"
+}

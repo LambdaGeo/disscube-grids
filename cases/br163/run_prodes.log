@@ -1,0 +1,63 @@
+pipeline  : prodes.toml  (sha256:babea6215d91…)
+grid      : br163  500 m, BDC Albers
+sources   : 3
+  - prodes_2008              prodes
+  - prodes_2016              prodes
+  - prodes_2024              prodes
+variables : 6
+  - deforested_pct           percentage(2) <- prodes_2008
+  - deforested_pct           percentage(2) <- prodes_2016
+  - deforested_pct           percentage(2) <- prodes_2024
+  - forest_pct               percentage(1) <- prodes_2008
+  - forest_pct               percentage(1) <- prodes_2016
+  - forest_pct               percentage(1) <- prodes_2024
+OK
+pipeline  : prodes.toml  (sha256:babea6215d91…)
+grid      : br163  500 m, BDC Albers
+sources   : 3
+  - prodes_2008              prodes
+  - prodes_2016              prodes
+  - prodes_2024              prodes
+variables : 6
+  - deforested_pct           percentage(2) <- prodes_2008
+  - deforested_pct           percentage(2) <- prodes_2016
+  - deforested_pct           percentage(2) <- prodes_2024
+  - forest_pct               percentage(1) <- prodes_2008
+  - forest_pct               percentage(1) <- prodes_2016
+  - forest_pct               percentage(1) <- prodes_2024
+workspace : <repo>/cases/br163/data/prodes
+derived   : 6 products on br163/500m
+exported  : <repo>/cases/br163/data/prodes.tif
+record    : <repo>/cases/br163/data/prodes/run.json
+	Command being timed: "bash ./run.sh run prodes"
+	User time (seconds): 4.36
+	System time (seconds): 0.35
+	Percent of CPU this job got: 122%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:03.83
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 328568
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 124584
+	Voluntary context switches: 5036
+	Involuntary context switches: 252
+	Swaps: 0
+	File system inputs: 800
+	File system outputs: 952
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+== band summary of the exported GeoTIFF (cells with data, mean, min, max; values as stored)
+86 x 94 cells, 6 bands, EPSG:10857
+deforested_pct_2008	cells 8084	mean 0.1448	min 0	max 1
+deforested_pct_2016	cells 8084	mean 0.19	min 0	max 1
+deforested_pct_2024	cells 8084	mean 0.3249	min 0	max 1
+forest_pct_2008	cells 8084	mean 0.852	min 0	max 1
+forest_pct_2016	cells 8084	mean 0.8068	min 0	max 1
+forest_pct_2024	cells 8084	mean 0.6719	min 0	max 1

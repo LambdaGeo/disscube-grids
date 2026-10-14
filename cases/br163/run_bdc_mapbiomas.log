@@ -1,0 +1,66 @@
+pipeline  : bdc_mapbiomas.toml  (sha256:258e14b62d01…)
+grid      : br163  500 m, BDC Albers
+sources   : 3
+  - ndvi                     bdc
+  - lulc_2008                mapbiomas
+  - lulc_2024                mapbiomas
+variables : 7
+  - ndvi_mean                mean <- ndvi
+  - landuse                  majority <- lulc_2008
+  - landuse                  majority <- lulc_2024
+  - forest_pct               percentage(3) <- lulc_2008
+  - forest_pct               percentage(3) <- lulc_2024
+  - pasture_pct              percentage(15) <- lulc_2008
+  - pasture_pct              percentage(15) <- lulc_2024
+OK
+pipeline  : bdc_mapbiomas.toml  (sha256:258e14b62d01…)
+grid      : br163  500 m, BDC Albers
+sources   : 3
+  - ndvi                     bdc
+  - lulc_2008                mapbiomas
+  - lulc_2024                mapbiomas
+variables : 7
+  - ndvi_mean                mean <- ndvi
+  - landuse                  majority <- lulc_2008
+  - landuse                  majority <- lulc_2024
+  - forest_pct               percentage(3) <- lulc_2008
+  - forest_pct               percentage(3) <- lulc_2024
+  - pasture_pct              percentage(15) <- lulc_2008
+  - pasture_pct              percentage(15) <- lulc_2024
+workspace : <repo>/cases/br163/data/bdc_mapbiomas
+derived   : 7 products on br163/500m
+exported  : <repo>/cases/br163/data/bdc_mapbiomas.tif
+record    : <repo>/cases/br163/data/bdc_mapbiomas/run.json
+	Command being timed: "bash ./run.sh run bdc_mapbiomas"
+	User time (seconds): 9.57
+	System time (seconds): 0.96
+	Percent of CPU this job got: 20%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:50.89
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 573076
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 3
+	Minor (reclaiming a frame) page faults: 136540
+	Voluntary context switches: 7627
+	Involuntary context switches: 612
+	Swaps: 0
+	File system inputs: 1800
+	File system outputs: 15600
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+== band summary of the exported GeoTIFF (cells with data, mean, min, max; values as stored)
+86 x 94 cells, 7 bands, EPSG:10857
+ndvi_mean_2020	cells 8084	mean 0.8057	min 0.2611	max 0.8806
+landuse_2008	cells 8084	mean 4.041	min 3	max 41
+landuse_2024	cells 8084	mean 6.245	min 3	max 41
+forest_pct_2008	cells 8084	mean 0.8796	min 0	max 1
+forest_pct_2024	cells 8084	mean 0.7122	min 0	max 1
+pasture_pct_2008	cells 8084	mean 0.07819	min 0	max 1
+pasture_pct_2024	cells 8084	mean 0.2013	min 0	max 1

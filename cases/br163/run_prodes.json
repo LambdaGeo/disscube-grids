@@ -1,0 +1,91 @@
+{
+  "disscube": "0.6.0",
+  "pipeline": {
+    "file": "<repo>/cases/br163/prodes.toml",
+    "checksum": "sha256:babea6215d91013a57b84491ce6a812a46047feead342e04031031bd13f2168f",
+    "name": "BR-163 (Pará) — PRODES deforestation"
+  },
+  "started": "2026-10-14T12:16:57+00:00",
+  "finished": "2026-10-14T12:16:59+00:00",
+  "grid": "br163/500m",
+  "sources": [
+    {
+      "id": "prodes_2008",
+      "type": "prodes",
+      "file": "<repo>/cases/br163/data/prodes/raw/prodes_2008.tif",
+      "checksum": "sha256:36fa907266343564a7b7bd19f75724ebb5f666d36fe72c72f4fb9006f814809a",
+      "time": 2008
+    },
+    {
+      "id": "prodes_2016",
+      "type": "prodes",
+      "file": "<repo>/cases/br163/data/prodes/raw/prodes_2016.tif",
+      "checksum": "sha256:06e755e1024d70ede2e380bbabf26afd1cce1c4462044dda1e7e2ce18194bd54",
+      "time": 2016
+    },
+    {
+      "id": "prodes_2024",
+      "type": "prodes",
+      "file": "<repo>/cases/br163/data/prodes/raw/prodes_2024.tif",
+      "checksum": "sha256:f2ce7fc94bcdfcecde08e5a15ea061c3ac5fcbdc582bf139c5995224aef7a924",
+      "time": 2024
+    }
+  ],
+  "derived": [
+    {
+      "target": "deforested_pct",
+      "source": "prodes_2008",
+      "spec_hash": "2c514565dfcc03dd63c9ffab4ec79a7a2d46d6e07e3c49a9823817f58f1f28e4",
+      "times": [
+        2008
+      ],
+      "file": "<repo>/cases/br163/data/prodes/store/derived/br163/500m/global/2c514565dfcc03dd63c9ffab4ec79a7a2d46d6e07e3c49a9823817f58f1f28e4/deforested_pct.zarr"
+    },
+    {
+      "target": "deforested_pct",
+      "source": "prodes_2016",
+      "spec_hash": "11ee3db15b215c08c9acb050dc8805e36d08f382adc975856fb171c8a73477c9",
+      "times": [
+        2016
+      ],
+      "file": "<repo>/cases/br163/data/prodes/store/derived/br163/500m/global/11ee3db15b215c08c9acb050dc8805e36d08f382adc975856fb171c8a73477c9/deforested_pct.zarr"
+    },
+    {
+      "target": "deforested_pct",
+      "source": "prodes_2024",
+      "spec_hash": "2a609c0f4edfa5923283586d09e5ff8efc3c37328ed427c297ee533122977d09",
+      "times": [
+        2024
+      ],
+      "file": "<repo>/cases/br163/data/prodes/store/derived/br163/500m/global/2a609c0f4edfa5923283586d09e5ff8efc3c37328ed427c297ee533122977d09/deforested_pct.zarr"
+    },
+    {
+      "target": "forest_pct",
+      "source": "prodes_2008",
+      "spec_hash": "9791414619a78381a6ed12b30fcd8dc829249d1011388e73c974cb218230a148",
+      "times": [
+        2008
+      ],
+      "file": "<repo>/cases/br163/data/prodes/store/derived/br163/500m/global/9791414619a78381a6ed12b30fcd8dc829249d1011388e73c974cb218230a148/forest_pct.zarr"
+    },
+    {
+      "target": "forest_pct",
+      "source": "prodes_2016",
+      "spec_hash": "d8953b2fdb0f7e99fd66ac8fd1718c77ca5e29fbf0f648ee3f5d72b394e29d7a",
+      "times": [
+        2016
+      ],
+      "file": "<repo>/cases/br163/data/prodes/store/derived/br163/500m/global/d8953b2fdb0f7e99fd66ac8fd1718c77ca5e29fbf0f648ee3f5d72b394e29d7a/forest_pct.zarr"
+    },
+    {
+      "target": "forest_pct",
+      "source": "prodes_2024",
+      "spec_hash": "3c2914d1462bd3d0d4b2509e9a398f6ec4b9e8f8b0b7697e77322a72dd0339ce",
+      "times": [
+        2024
+      ],
+      "file": "<repo>/cases/br163/data/prodes/store/derived/br163/500m/global/3c2914d1462bd3d0d4b2509e9a398f6ec4b9e8f8b0b7697e77322a72dd0339ce/forest_pct.zarr"
+    }
+  ],
+  "exported": "<repo>/cases/br163/data/prodes.tif"
+}

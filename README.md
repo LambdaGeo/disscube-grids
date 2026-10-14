@@ -11,19 +11,21 @@ except `para`, whose figure of three sources side by side is drawn by `cases/par
 
 | Area | Pipeline | Sources | Grid | Status |
 |---|---|---|---|---|
-| `cases/ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas, PRODES | 300 m, 58 × 59 cells | MapBiomas half **ran here** (10 Oct 2026, DisSCube 0.5.0); BDC half not run (STAC unreachable from the build machine) |
+| `cases/ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas, PRODES | 300 m, 58 × 59 cells | **ran here** (14 Oct 2026, DisSCube 0.6.0): 55 s, 0.24 GB, most of it waiting for the BDC STAC |
 | `cases/para/` | `sources.toml` | MapBiomas (collection 11, level-1 land use), PRODES | 5 km, whole state, 280 × 291 cells | **ran here** (12 Oct 2026, DisSCube with block reading, see below): 5 min 44 s, 2.1 GB |
 | `cases/para/` | `bdc_ndvi.toml` | BDC MODIS NDVI (STAC, 231 m) | same | **ran here** (12 Oct 2026): 2 min 48 s, 4.1 GB; third panel of the figure |
-| `cases/br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (10 Oct 2026, DisSCube 0.5.0) |
-| `cases/br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | MapBiomas half **ran here** (11 Oct 2026, DisSCube 0.5.0); BDC half: to run (needs access to the BDC STAC service) |
+| `cases/br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (14 Oct 2026, DisSCube 0.6.0): 4 s, 0.33 GB |
+| `cases/br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | **ran here** (14 Oct 2026, DisSCube 0.6.0): 51 s, 0.57 GB, most of it waiting for the BDC STAC |
 | `cases/amazonia_legal/` | `prodes.toml` | PRODES (Legal Amazon) | 5.28 km, whole region, 680 × 520 cells | single TOML **ran here** for the whole region (12 Oct 2026): 27 min 13 s, 2.9 GB; on 3 × 3 tiles it agrees with the earlier tile script |
 | `cases/brasil_5km/` | `mapbiomas.toml` | MapBiomas (collection 11, 30 m) | 5.28 km, 900 × 1,040 cells | single TOML **ran here** for the whole country (12 Oct 2026): 1 h 43 min 55 s, 3.9 GB; on 2 tiles it agrees with the earlier tile script |
 
-## First results (Ilha do Maranhão, 10 Oct 2026)
+## First results (Ilha do Maranhão, 14 Oct 2026)
 
 MapBiomas (collection 11) on the 300 m BDC-snapped grid: 3,083 of 3,422 cells have data; urban share
 41.4 % (2000) → 47.5 % (2020), forest 22.8 % → 19.4 %, mangrove 4.1 % → 4.5 %, the same figures
-as the earlier run in `disscube-recipes`. It takes about 6 s after the download.
+as the earlier run in `disscube-recipes` and the run of 10 Oct 2026 (DisSCube 0.5.0). The whole file (BDC, MapBiomas and PRODES) took 54.7 s with a peak memory of 0.24 GB on 14 Oct 2026
+(DisSCube 0.6.0; 7 s of CPU, the rest is waiting for the BDC STAC). The Landsat indices of the BDC (dry season 2020) cover all 3,422 cells: NDVI mean 0.32 (−0.48 to 0.86) and MNDWI mean −0.27 (−0.59 to 0.69).
+The record of the run is `run_bdc_mapbiomas.log`, `run_bdc_mapbiomas.json` and `env.txt` in the folder.
 ![MapBiomas on the island, 2020](docs/figures/ilha_maranhao_mapbiomas.png)
 
 The figure shows three MapBiomas bands (urban, forest and mangrove share, 2020; MapBiomas, CC BY 4.0), drawn with
@@ -37,9 +39,11 @@ the PRODES domain edge (the island lies at the limit of the Legal Amazon) and no
 The PRODES source is kept in `bdc_mapbiomas.toml` (variables prefixed `prodes_`) as the record of this test, so the island is
 built from three sources in one file; PRODES is shown as a useful map on `cases/br163/` instead.
 
-PRODES on the BR-163 near Mojuí dos Campos (500 m grid, 94 × 86 cells, 7,997 of 8,084 cells with data,
-about 5 s after the download): deforested share 18.1 % (2008) → 20.1 % (2016) → 20.5 % (2024); forest
-81.6 % → 79.5 % → 79.2 %. The maps show the fishbone pattern of the road's side roads.
+PRODES on the BR-163 near Mojuí dos Campos (500 m grid, 94 × 86 cells, all 8,084 cells with data,
+3.8 s after the download, peak memory 0.33 GB, DisSCube 0.6.0, 14 Oct 2026): mean deforested share 14.5 % (2008) → 19.0 % (2016) → 32.5 % (2024); forest
+85.2 % → 80.7 % → 67.2 %. The maps show the fishbone pattern of the road's side roads.
+The run of 10 Oct 2026 (DisSCube 0.5.0) gave 7,997 cells with data and 18.1 % → 20.1 % → 20.5 % deforested: the PRODES reader of 0.5.0 dropped the yearly classes d2010 to d2025
+(fixed in 0.6.0), so those numbers, and the figure drawn from them, are replaced.
 ![PRODES on the BR-163](docs/figures/br163_prodes.png)
 
 Figure: deforested and forest share, 2008, 2016 and 2024 (PRODES/INPE, CC BY-SA 4.0), drawn with `disscube plot data/prodes.tif -o ../../docs/figures/br163_prodes.png --cols 3 --shared-colorbar --crop`.
@@ -52,6 +56,9 @@ space), so that the Brazil Data Cube (Landsat NDVI, dry season 2020), MapBiomas 
 cell by cell. `./run.sh plot bdc_mapbiomas` draws their bands with `disscube plot`. It is an illustration of how the same declarative
 file starts from different open sources, not a validation: the sources define forest differently and are not expected to
 agree cell by cell.
+
+Run of 14 Oct 2026 (DisSCube 0.6.0): 50.9 s, peak memory 0.57 GB (20 % of one CPU core; the rest is waiting for the STAC). The Landsat NDVI of the dry season of 2020 has data in all 8,084 cells (mean 0.81, 0.26 to 0.88).
+MapBiomas gives forest 88.0 % (2008) → 71.2 % (2024) and pasture 7.8 % → 20.1 %; PRODES forest is 85.2 % → 67.2 % (previous paragraph). The sources move in the same direction and differ in level, as their definitions of forest differ.
 
 Two things found while running, both in DisSCube 0.5.0: `disscube export` as a separate command
 looks the grid up by its name (`ilha_do_maranhao`) while the cube stores `ilha_do_maranhao/300m`, and
@@ -156,7 +163,7 @@ copied to `docs/figures/`).
 the release, on commits of the branch that became 0.6.0: `9aa7515` (Legal Amazon, Pará) and `f2feb95` (Brazil). Compared with the release, the code differs in the repair of invalid
 polygons of vector sources, the closing of the source files, the DisSCube version written to `run.json` and, for `f2feb95`, the `disscube plot` command; `9aa7515` already
 has the PRODES fix of the yearly classes. None of these three cases reads a vector source, so none of the repairs applies to them. The small cases (Ilha do Maranhão, BR-163)
-ran on 0.5.0. A run made with 0.6.0 records `"disscube": "0.6.0"` in its `run.json`; the records of the earlier runs do not have that field, and `env.txt` has the commit.
+were run again on 14 Oct 2026 with the release 0.6.0 (`scripts/record_run.sh`; the records are `run_<pipeline>.log`, `run_<pipeline>.json` and `env.txt` in the case folders); their first runs, of 10 and 11 Oct, used 0.5.0. A run made with 0.6.0 records `"disscube": "0.6.0"` in its `run.json`; the records of the earlier runs do not have that field, and `env.txt` has the commit.
 
 ## Notes
 
