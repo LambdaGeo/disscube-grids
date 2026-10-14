@@ -22,3 +22,11 @@ authors:
     given-names: Sérgio Souza
     orcid: "https://orcid.org/0000-0002-0232-4549"
     affiliation: "Universidade Federal do Maranhão (UFMA)"
+references:
+  - type: software
+    title: "DisSCube: Declarative spatial data cubes"
+    version: 0.6.0
+    doi: 10.5281/zenodo.23365403
+    authors:
+      - family-names: Costa
+        given-names: Sérgio Souza

@@ -55,19 +55,19 @@ agree cell by cell.
 
 Two things found while running, both in DisSCube 0.5.0: `disscube export` as a separate command
 looks the grid up by its name (`ilha_do_maranhao`) while the cube stores `ilha_do_maranhao/300m`, and
-fails; `run --output` exports correctly, which is what `run.sh` uses. And the process ends with an
-`Error in sys.excepthook` message after the work is done (output is complete).
+fails; `run --output` exports correctly, which is what `run.sh` uses. And the process ended with an
+`Error in sys.excepthook` message after the work was done (output complete); its cause, a source raster that was
+never closed, is fixed in 0.6.0.
 
 ### PRODES over the whole Legal Amazon (`cases/amazonia_legal/`)
 
 One pipeline file, `prodes.toml`, for the whole region: PRODES (2008 and 2024) on the BDC Albers mesh, 5.28 km cells (680 × 520, the
-cells of the BDC_SM tiles). The PRODES raster has 9.7 billion pixels, so it needs a DisSCube that reads and aligns by blocks (branch
-`feat/out-of-core-sources` of [DisSModel/disscube](https://github.com/DisSModel/disscube), not yet merged: change this note when it
-is); 0.5.0 as released stops for lack of memory. Bands: `prodes_deforested_pct_<year>`, `prodes_forest_pct_<year>`.
+cells of the BDC_SM tiles). The PRODES raster has 9.7 billion pixels, so it needs a DisSCube that reads and aligns by blocks (0.6.0 or later,
+[DisSModel/disscube](https://github.com/DisSModel/disscube)); 0.5.0 stops for lack of memory. Bands: `prodes_deforested_pct_<year>`, `prodes_forest_pct_<year>`.
 `./run.sh plot` draws the map with `disscube plot` (`docs/figures/amazonia_prodes.png`), without a script of its own. This replaces the tile script that ran the same pipeline 884 times
 (`build_prodes_amazonia.py`); on a window of 3 × 3 tiles the two agree to 0.4 % of a cell at most.
 
-**Whole region, 12 Oct 2026** (DisSCube, branch `feat/out-of-core-sources`, commit `9aa7515`): 27 min 13 s on one CPU core, peak memory 2.9 GB, four passes
+**Whole region, 12 Oct 2026** (DisSCube commit `9aa7515`, the code that became 0.6.0; see "Versions" below): 27 min 13 s on one CPU core, peak memory 2.9 GB, four passes
 (one per derivation) of 496 blocks each, with the PRODES archive already in the cache. The mean share of accumulated deforestation over the cells is
 14.5 % at the end of 2008 and 17.0 % at the end of 2024. GeoTIFF SHA-256 `bc5de6aca978…871dab`; the hashes of the pipeline and of the sources are in `data/prodes/run.json`.
 The figure is the quick look of `./run.sh plot` (`disscube plot --shared-colorbar --crop`): (left) accumulated deforestation and (right) forest, 2024.
@@ -81,9 +81,8 @@ cd cases/amazonia_legal && ./run.sh all          # validate, run (network), expo
 
 One pipeline file, `sources.toml`, for the whole state: MapBiomas 2024 (30 m) and PRODES 2024, on a 5 km grid snapped to the BDC
 Albers mesh. Pará lies entirely inside the Legal Amazon, so PRODES covers all of it. Each window is about 2.2 billion pixels, so it
-needs a DisSCube that reads and aligns by blocks (branch `feat/out-of-core-sources` of
-[DisSModel/disscube](https://github.com/DisSModel/disscube), not yet merged: change this note when it is). With 0.5.0 as released it
-stops for lack of memory; the same file on the Acre (430 million pixels, 1 km) ran with 1.3 GB.
+needs a DisSCube that reads and aligns by blocks (0.6.0 or later,
+[DisSModel/disscube](https://github.com/DisSModel/disscube)). 0.5.0 stops for lack of memory; the same file on the Acre (430 million pixels, 1 km) ran with 1.3 GB.
 
 - **Land use:** `l1_class` is the MapBiomas class that covers most of the cell, at **MapBiomas level 1** (1 Forest, 2 Herbaceous and
   shrubby vegetation, 3 Farming, 4 Non vegetated area, 5 Water), through `[derive.params.groups]`, a list of leaf codes per class
@@ -100,7 +99,7 @@ stops for lack of memory; the same file on the Acre (430 million pixels, 1 km) r
   (`./run.sh run bdc_ndvi`, network) and `./run.sh plot sources` adds it as panel (c). The collection id and the asset name are those of the
   [BDC STAC catalog](https://data.inpe.br/bdc/stac/v1/collections/mod13q1-6.1); both ran on 12 Oct 2026.
 
-**Runs of 12 Oct 2026** (DisSCube, branch `feat/out-of-core-sources`, commit `9aa7515`, one CPU core): `sources` took 5 min 44 s with a peak memory of 2.1 GB
+**Runs of 12 Oct 2026** (DisSCube commit `9aa7515`, the code that became 0.6.0; one CPU core): `sources` took 5 min 44 s with a peak memory of 2.1 GB
 (two passes of 64 blocks of 35 × 37 cells); `bdc_ndvi` took 2 min 48 s with a peak memory of 4.1 GB, mostly waiting for the network (19 % of one core): it has no block
 stage in its log, and its peak is the highest of the runs on this page. By cell, forest is the MapBiomas class that covers most of the cell in 75 % of the cells of the state,
 farming in 19 %, water in 3 %, herbaceous and shrubby vegetation in 2 % and non-vegetated area in 0.1 %. GeoTIFF SHA-256: `sources.tif` `99fabb74…8169d0`, `bdc_ndvi.tif` `e30686cc…e510d2`.
@@ -115,7 +114,7 @@ cd cases/para && ./run.sh run sources && ./run.sh run bdc_ndvi && ./run.sh plot 
 One pipeline file, `mapbiomas.toml`: MapBiomas collection 11 (30 m, year 2000) on the 5.28 km grid of Brazil (900 × 1,040 cells), seven land-use shares per cell. The source window
 has 154,470 × 146,501 pixels (22.6 billion). The classes are our own grouping, not those of LuccME-BR (`cases/brasil_5km/README.md`).
 
-**Whole country, 12 Oct 2026** (DisSCube, branch `feat/out-of-core-sources`, commit `f2feb95`): 1 h 43 min 55 s on one CPU core, peak memory 3.9 GB, seven passes over the
+**Whole country, 12 Oct 2026** (DisSCube commit `f2feb95`, the code that became 0.6.0; see "Versions" below): 1 h 43 min 55 s on one CPU core, peak memory 3.9 GB, seven passes over the
 source (one per class). GeoTIFF SHA-256 `3d7ef2f6…92ff72`. The figure is `./run.sh plot` (`disscube plot --shared-colorbar --crop`), four of the seven classes:
 `forest_vegetation`, `country_vegetation`, `pasture_management` and `agricultural`. It is a visual check of the output, not a validation.
 ![MapBiomas over Brazil, 2000](docs/figures/brasil_mapbiomas.png)
@@ -143,7 +142,15 @@ copied to `docs/figures/`).
 - **Sources with different geometry on one grid:** BDC composites (raster, STAC), MapBiomas
   (30 m classes), PRODES (Legal Amazon only, years from 2007).
 - **Cost:** `brasil_5km` is the large case: MapBiomas at 30 m over Brazil is about 22.6 billion pixels. It is one TOML that needs a
-  DisSCube reading by blocks (branch `feat/out-of-core-sources`, not yet merged); with 0.5.0 as released it does not fit in memory.
+  DisSCube reading by blocks (0.6.0 or later); with 0.5.0 it does not fit in memory.
+
+## Versions
+
+`requirements.txt` pins the release DisSCube 0.6.0 (10.5281/zenodo.23365403). The runs of the three large cases (Legal Amazon, Pará, Brazil) were made on 12 Oct 2026, before
+the release, on commits of the branch that became 0.6.0: `9aa7515` (Legal Amazon, Pará) and `f2feb95` (Brazil). Compared with the release, the code differs in the repair of invalid
+polygons of vector sources, the closing of the source files, the DisSCube version written to `run.json` and, for `f2feb95`, the `disscube plot` command; `9aa7515` already
+has the PRODES fix of the yearly classes. None of these three cases reads a vector source, so none of the repairs applies to them. The small cases (Ilha do Maranhão, BR-163)
+ran on 0.5.0. A run made with 0.6.0 records `"disscube": "0.6.0"` in its `run.json`; the records of the earlier runs do not have that field, and `env.txt` has the commit.
 
 ## Notes
 

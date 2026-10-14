@@ -13,9 +13,7 @@ grid only. The model is not run on it and no result of section 5.4 depends on it
 ## Why it needs a DisSCube that reads by blocks
 
 MapBiomas at 30 m over Brazil is 22.6 billion pixels (154,470 × 146,501; about 90 GB as float32). DisSCube 0.5.0 reads the whole window of a
-source into memory, so it does not fit; the first version of this test ran DisSCube tile by tile from a script. With the branch
-`feat/out-of-core-sources` of [DisSModel/disscube](https://github.com/DisSModel/disscube) (not yet merged: change this note when it
-is) one `disscube run` reads, aligns and aggregates by strips of grid rows, and the script is gone. The grid is the BDC_SM mesh in
+source into memory, so it does not fit; the first version of this test ran DisSCube tile by tile from a script. With DisSCube 0.6.0 ([DisSModel/disscube](https://github.com/DisSModel/disscube)) one `disscube run` reads, aligns and aggregates by strips of grid rows, and the script is gone. The grid is the BDC_SM mesh in
 tiles of 105.6 km (45 × 52 = 2,340 tiles of 20 × 20 cells, 900 × 1,040 cells).
 
 ## Steps
@@ -60,7 +58,7 @@ run by the author), the class codes against the legend of collection 11, and the
 
 ## The whole country (12 Oct 2026)
 
-`./run.sh run` with DisSCube at commit `f2feb95` of the branch `feat/out-of-core-sources`, on one CPU core (Intel Core i7-7700T, 15 GiB of RAM): 1 h 43 min 55 s, peak memory 3.9 GB,
+`./run.sh run` with DisSCube at commit `f2feb95` (the code that became 0.6.0), on one CPU core (Intel Core i7-7700T, 15 GiB of RAM): 1 h 43 min 55 s, peak memory 3.9 GB,
 seven passes over the source, one per class. Window 154,470 × 146,501 pixels (22,630,009,470), grid `brasil_5km` of 900 × 1,040 cells. Hashes: pipeline `2cf54bc8…380fdc`,
 source `lulc_2000.tif` `ad6f0a6a…c2ad2f`, output `mapbiomas_5k.tif` `3d7ef2f6…92ff72` (the full values are in `data/mapbiomas/run.json`). `./run.sh plot` draws four of the seven classes
 (`docs/figures/brasil_mapbiomas.png`). The class codes against the legend of collection 11 and the comparison of class areas with the NetCDF layer are still not done.

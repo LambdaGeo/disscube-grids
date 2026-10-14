@@ -1,8 +1,7 @@
 # disscube-grids / brasil_5km — MapBiomas (collection 11, 30 m, year 2000) on the 5.28 km grid of the verification model
 #
 # The seven land-use shares of every cell of the national grid (900 x 1040 cells, the BDC_SM tiles of 105.6 km: 45 x 52 tiles).
-# MapBiomas at 30 m over Brazil is 22.6 billion pixels (154,470 x 146,501), so this needs a DisSCube that reads and aligns by blocks (branch
-# feat/out-of-core-sources of DisSModel/disscube, not yet merged: change this note when it is). It replaces build_mapbiomas_cellspace.py,
+# MapBiomas at 30 m over Brazil is 22.6 billion pixels (154,470 x 146,501), so this needs a DisSCube that reads and aligns by blocks (0.6.0 or later). It replaces build_mapbiomas_cellspace.py,
 # which ran DisSCube once per tile. The output has the seven land-use bands only (<class>_2000); the drivers and the mask of the cell
 # space come from the open-lucc-workflow pipeline, as before (see README.md).
 #
