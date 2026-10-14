@@ -143,7 +143,7 @@ To run a pipeline **and keep its record** (log with the `time -v` summary and a 
 scripts/record_run.sh ilha_maranhao bdc_mapbiomas     # needs GNU time (apt install time); refuses to run if the installed DisSCube is not the pinned release
 ```
 
-Each case keeps the record of its run: `run.log` (with the `time -v` summary), `env.txt` (machine and versions) and `run.json` (pipeline, sources and derived variables with their SHA-256, start and end), the last with the paths made relative to the case folder; the workspace `data/` is not versioned.
+Each case keeps the record of its run: the log (with the `time -v` summary), `env.txt` (machine and versions) and the `run.json` of DisSCube (pipeline, sources and derived variables with their SHA-256, DisSCube version, start and end), with the path of the repository replaced by `<repo>`. The first runs keep `run.log` and `run.json`; the runs made with `scripts/record_run.sh` keep `run_<pipeline>.log` and `run_<pipeline>.json`. The workspace `data/` is not versioned.
 
 Times and memory were measured on one desktop computer (Intel Core i7-7700T at 2.90 GHz, 15 GiB of RAM, Ubuntu, Python 3.12.3) with `/usr/bin/time -v`;
 peak memory is the peak resident set size, in GB of 10^9 bytes. Single runs: they say nothing about the speed of other tools.

@@ -2,7 +2,7 @@
 
 > **Status in this repository.** The 5.28 km grid and the seven land-use shares are one TOML here, `mapbiomas.toml`. The drivers and the
 > mask of the cell space still come from the open-lucc-workflow pipeline (`data/raw_cellspace_bdc_5k.tif`); `replace_bands.py` puts the
-> land-use bands of the DisSCube output into it. The whole country is not run yet (see "What was tested here").
+> land-use bands of the DisSCube output into it. The whole country ran on 12 Oct 2026 (see "The whole country").
 
 Manuscript, section 5.4.3. The main runs use the land-cover layer of the LuccME-BR database (NetCDF, pixels of about
 100 km²). At 5.28 km the land-use bands therefore carry no information finer than that source. This test builds the
@@ -19,7 +19,7 @@ tiles of 105.6 km (45 × 52 = 2,340 tiles of 20 × 20 cells, 900 × 1,040 cells)
 ## Steps
 
 ```bash
-pip install -r requirements.txt            # with the DisSCube branch above
+pip install -r requirements.txt            # DisSCube 0.6.0
 disscube validate mapbiomas.toml
 disscube run mapbiomas.toml --workspace data/mapbiomas --output data/mapbiomas_5k.tif     # network
 # a quick try on two tiles of Pará: bbox = [5280000.0, 10771200.0, 5491200.0, 10876800.0] in a copy of the file
@@ -53,8 +53,7 @@ would take about 7 hours; `--jobs` runs tiles at the same time.
 
 On the two tiles of the pilot (25,10 and 26,10, real MapBiomas 2000) the single TOML and the tile script agree: same cells, same empty
 cells, shares add to 1 in all 800 cells, largest difference 0.24 % of a cell (the edge of the strips and tiles). The TOML took 11 s for the
-two tiles, the script 44 s; `replace_bands.py` on a base cell space gives the same file as the script. Not yet done: the whole country (a
-run by the author), the class codes against the legend of collection 11, and the comparison of class areas with the NetCDF layer.
+two tiles, the script 44 s; `replace_bands.py` on a base cell space gives the same file as the script. Not yet done here: the class codes against the legend of collection 11 and the comparison of class areas with the NetCDF layer (the whole country is below).
 
 ## The whole country (12 Oct 2026)
 
