@@ -1,5 +1,7 @@
 # disscube-grids
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23368071.svg)](https://doi.org/10.5281/zenodo.23368071)
+
 How to build gridded variables ("cellular spaces") from open data with
 [DisSCube](https://github.com/DisSModel/disscube): one study area per folder in `cases/`, one TOML file per
 grid, a few lines of shell to run it, and the maps it produces.
@@ -174,3 +176,9 @@ were run again on 14 Oct 2026 with the release 0.6.0 (`scripts/record_run.sh`; t
   run; each run records them in `run.json` and in `*.provenance.json`.
 - Code and configuration: MIT. The figures in `docs/figures/` follow the licence of the data they show
   (CC BY 4.0 for MapBiomas; CC BY-SA 4.0 where PRODES appears). Sources, licences and how to cite them: [THIRD_PARTY.md](THIRD_PARTY.md).
+
+## Cite
+
+Costa, S. S. (2026). *disscube-grids: building gridded variables from open data with DisSCube* (Version v1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23368071
+
+The DOI above is the one of version 1.0.0; the Zenodo record also lists the concept DOI, which always points to the latest version. Cite DisSCube itself (10.5281/zenodo.23365403) and the data providers as well (see [THIRD_PARTY.md](THIRD_PARTY.md)).
