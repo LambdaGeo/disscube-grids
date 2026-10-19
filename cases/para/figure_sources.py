@@ -1,13 +1,17 @@
 """One figure with the open sources of the state of Pará on the 5 km grid of `sources.toml`.
 
-    python figure_sources.py [cube.tif] [--bdc bdc_ndvi.tif] [--year 2024] [--out ../../docs/figures/para_sources.png]
-                             [--state-zip FILE.zip] [--title "Pará: ..."]
+    python figure_sources.py [cube.tif] [--bdc bdc_ndvi.tif] [--seats seats.tif] [--year 2024]
+                             [--out ../../docs/figures/para_sources.png] [--state-zip FILE.zip] [--seats-zip FILE.zip]
+                             [--title "Pará: ..."]
 
 (a) MapBiomas: the level-1 class that covers most of each cell (`l1_class`: Forest, Herbaceous and shrubby
 vegetation, Farming, Non vegetated area, Water). (b) PRODES: the class that covers most of the cell (`prodes_class`:
 Forest, Deforested up to the year, Other, Water). (c) Brazil Data Cube: MODIS NDVI, only when --bdc gives the cube of
-bdc_ndvi.toml. Cells outside the state are masked with the IBGE boundary (territorial mesh 2025), downloaded once into the
-DisSCube cache and checked against its SHA-256; --state-zip gives a local copy instead.
+bdc_ndvi.toml. (d) Distance to the nearest municipal seat, only when --seats gives the GeoTIFF of seats.toml; the seats
+(IBGE BC250 2016, through the ANA catalogue) are drawn as dots, from a download kept in the DisSCube cache and checked against
+its SHA-256 (--seats-zip gives a local copy). With the four panels the layout is 2 x 2, otherwise one row. Cells outside the
+state are masked with the IBGE boundary (territorial mesh 2025), downloaded once into the DisSCube cache and checked against
+its SHA-256; --state-zip gives a local copy instead.
 """
 import argparse
 from pathlib import Path
@@ -45,6 +49,9 @@ def band(ds, name):
 STATE_URL = ("https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/"
              "municipio_2025/UFs/PA/PA_UF_2025.zip")
 STATE_SHA256 = "f01247e31debb8a11bada4d22cdfaf621cacc7a0f80f9248cc4865719bad622c"
+SEATS_URL = ("https://metadados.snirh.gov.br/geonetwork/srv/api/records/8db5549f-2b94-40f0-b968-6f940bad68fa/"
+             "attachments/GEOFT_CIDADE_2016.zip")                      # the same file as seats.toml
+SEATS_SHA256 = "0311f4267c4ea871b3e928bf8821ba03380a58595ff3e4cc5e77cf315f16c16a"
 
 
 def state_boundary(local=None):
@@ -57,6 +64,18 @@ def state_boundary(local=None):
     root = os.environ.get("DISSCUBE_CACHE_DIR") or os.environ.get("DISSCUBE_CACHE")
     cache = Path(root) / "raw" if root else Path(pooch.os_cache("disscube")) / "raw"
     return pooch.retrieve(STATE_URL, known_hash=f"sha256:{STATE_SHA256}", fname="PA_UF_2025.zip", path=cache)
+
+
+def seats_zip(local=None):
+    """The ANA file of the municipal seats: a local copy, or the download kept in the DisSCube cache (verified by hash)."""
+    if local:
+        return local
+    import os
+
+    import pooch
+    root = os.environ.get("DISSCUBE_CACHE_DIR") or os.environ.get("DISSCUBE_CACHE")
+    cache = Path(root) / "raw" if root else Path(pooch.os_cache("disscube")) / "raw"
+    return pooch.retrieve(SEATS_URL, known_hash=f"sha256:{SEATS_SHA256}", fname="GEOFT_CIDADE_2016.zip", path=cache)
 
 
 def load(path, name, state_zip):
@@ -74,6 +93,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("cube", nargs="?", default=str(HERE / "data" / "sources.tif"))
     ap.add_argument("--bdc", default=None, help="GeoTIFF of bdc_ndvi.toml (adds the NDVI panel)")
+    ap.add_argument("--seats", default=None, help="GeoTIFF of seats.toml (adds the distance panel)")
+    ap.add_argument("--seats-zip", default=None, help="a local copy of GEOFT_CIDADE_2016.zip (default: download it)")
     ap.add_argument("--year", default="2024")
     ap.add_argument("--out", default=str(HERE.parent.parent / "docs" / "figures" / "para_sources.png"))
     ap.add_argument("--state-zip", default=None, help="a local copy of the state boundary (IBGE shapefile in a zip); default: download it")
@@ -86,12 +107,23 @@ def main():
     if l1 is None:
         raise SystemExit(f"no band l1_class_{a.year} in {a.cube}")
     nd = load(a.bdc, "ndvi_mean", a.state_zip)[0] if a.bdc else None
+    dist = None
+    if a.seats:
+        dist = load(a.seats, "dist_seats", a.state_zip)[0] / 1e3                     # metres to km
+        import geopandas as gpd
+        state = gpd.read_file(f"zip://{a.state_zip}")
+        seats = gpd.read_file(f"zip://{seats_zip(a.seats_zip)}").to_crs(state.crs)
+        seats = seats[seats.within(state.union_all())]
 
-    n = 2 + (nd is not None)
+    n = 2 + (nd is not None) + (dist is not None)
     aspect = (ext[3] - ext[2]) / (ext[1] - ext[0])             # map height / width, so the panels fit the state
     pw = 5.4
-    fig, axes = plt.subplots(1, n, figsize=(pw * n, pw * aspect + 1.3), constrained_layout=True)
-    axes = np.atleast_1d(axes)
+    if n == 4:                                                    # four panels: 2 x 2
+        fig, axes = plt.subplots(2, 2, figsize=(2 * pw, 2 * (pw * aspect + 1.0)), constrained_layout=True)
+        axes = axes.ravel()
+    else:
+        fig, axes = plt.subplots(1, n, figsize=(pw * n, pw * aspect + 1.3), constrained_layout=True)
+        axes = np.atleast_1d(axes)
     for ax in axes:
         ax.set_xticks([]); ax.set_yticks([]); ax.set_facecolor("white")
 
@@ -113,6 +145,14 @@ def main():
         im = axes[2].imshow(np.where(inside, nd, np.nan), extent=ext, cmap="YlGn", vmin=0, vmax=1, interpolation="nearest")
         fig.colorbar(im, ax=axes[2], shrink=0.6, label="NDVI (mean of the dry-season composite)")
         axes[2].set_title("(c) Brazil Data Cube, MODIS NDVI, dry season 2020", fontsize=11, loc="left")
+    if dist is not None:
+        k = n - 1                                                 # the last panel; its letter follows the panels drawn
+        im = axes[k].imshow(np.where(inside, dist, np.nan), extent=ext, cmap="viridis", interpolation="nearest")
+        fig.colorbar(im, ax=axes[k], shrink=0.6, label="km")
+        with rasterio.open(a.seats) as ds:
+            pts = seats.to_crs(ds.crs)
+        axes[k].scatter(pts.geometry.x / 1e3, pts.geometry.y / 1e3, s=3, c="white", edgecolors="black", linewidths=0.25)
+        axes[k].set_title(f"({'abcd'[k]}) Distance to the nearest municipal seat", fontsize=11, loc="left")
 
     # scale bar: about a quarter of the width, rounded to 1, 2 or 5 x 10^k km (the extent is in km, in the grid CRS)
     width, height = ext[1] - ext[0], ext[3] - ext[2]

@@ -9,13 +9,14 @@ grid, a few lines of shell to run it, and the maps it produces.
 The point is the **grid construction**: each pipeline file states the grid (snapped to the
 [Brazil Data Cube](https://brazil-data-cube.github.io/) Albers mesh), the sources and how each
 variable is derived. There is no case-specific code in the pipelines. The maps are drawn with `disscube plot` (`amazonia_legal`, `brasil_5km`, `ilha_maranhao`, `br163`),
-except `para`, whose figure of three sources side by side is drawn by `cases/para/figure_sources.py`.
+except `para`, whose figure of four sources side by side is drawn by `cases/para/figure_sources.py`.
 
 | Area | Pipeline | Sources | Grid | Status |
 |---|---|---|---|---|
 | `cases/ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas, PRODES | 300 m, 58 × 59 cells | **ran here** (14 Oct 2026, DisSCube 0.6.0): 55 s, 0.24 GB, most of it waiting for the BDC STAC |
 | `cases/para/` | `sources.toml` | MapBiomas (collection 11, level-1 land use), PRODES | 5 km, whole state, 280 × 291 cells | **ran here** (12 Oct 2026, DisSCube with block reading, see below): 5 min 44 s, 2.1 GB |
-| `cases/para/` | `bdc_ndvi.toml` | BDC MODIS NDVI (STAC, 231 m) | same | **ran here** (12 Oct 2026): 2 min 48 s, 4.1 GB; third panel of the figure |
+| `cases/para/` | `bdc_ndvi.toml` | BDC MODIS NDVI (STAC, 231 m) | same | **ran here** (12 Oct 2026): 2 min 48 s, 4.1 GB; panel (c) of the figure |
+| `cases/para/` | `seats.toml` | Municipal seats (points, IBGE BC250 2016 through the ANA catalogue), the source of `e_cities` in the Open LUCC workflow | same | checked on a copy of the file (19 Oct 2026, DisSCube 0.6.0): equal to an independent nearest-point calculation, largest difference 3 × 10⁻⁸ m; panel (d) of the figure |
 | `cases/br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (14 Oct 2026, DisSCube 0.6.0): 4 s, 0.33 GB |
 | `cases/br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | **ran here** (14 Oct 2026, DisSCube 0.6.0): 51 s, 0.57 GB, most of it waiting for the BDC STAC |
 | `cases/amazonia_legal/` | `prodes.toml` | PRODES (Legal Amazon) | 5.28 km, whole region, 680 × 520 cells | single TOML **ran here** for the whole region (12 Oct 2026): 27 min 13 s, 2.9 GB; on 3 × 3 tiles it agrees with the earlier tile script |
@@ -101,9 +102,16 @@ needs a DisSCube that reads and aligns by blocks (0.6.0 or later,
   dominant one, `percentage` takes a list: `class_code = [3, 4, 5, 6, 49]`.
 - **PRODES:** `prodes_class` is the class that covers most of the cell: forest, deforested up to 2024, other (non-forest vegetation) and
   water (hydrography, kept apart by `water = 4` in `[source.codes]` of the source; without it the default map folds it into other; clouds are no data). For the deforested share, `percentage` with `class_code = 2`.
-- `figure_sources.py` draws the sources side by side (`docs/figures/para_sources.png`): (a) MapBiomas level-1 land use, (b) PRODES classes and,
-  with `--bdc` pointing to the GeoTIFF of `bdc_ndvi.toml`, (c) the BDC NDVI. Cells outside the state are masked using the IBGE
+- `figure_sources.py` draws the sources side by side (`docs/figures/para_sources.png`): (a) MapBiomas level-1 land use, (b) PRODES classes,
+  with `--bdc` pointing to the GeoTIFF of `bdc_ndvi.toml`, (c) the BDC NDVI and, with `--seats` pointing to the GeoTIFF of `seats.toml`, (d) the
+  distance to the nearest municipal seat (the seats are drawn as dots; the file is downloaded once into the DisSCube cache and checked against its SHA-256, `--seats-zip` gives a local copy).
+  With the four panels the layout is 2 × 2, otherwise one row. Cells outside the state are masked using the IBGE
   boundary ([`PA_UF_2025.zip`](https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2025/UFs/PA/PA_UF_2025.zip), IBGE territorial mesh 2025), which the script downloads once into the DisSCube cache and checks against its SHA-256 (`--state-zip` gives a local copy); the file is not kept in the repository.
+- `seats.toml` is a point source on the same grid: the 5,570 municipal seats (IBGE BC250, 2016, through the ANA metadata catalogue), the same file and the
+  same operator (`distance`, measured in EPSG:5880, in metres) as the variable `e_cities` of the
+  [Open LUCC workflow](https://github.com/LambdaGeo/open-lucc-workflow). It is small (one file of about 2 MB) and shows the third kind of source, a vector layer of points,
+  declared like the raster sources of `sources.toml` and the BDC source of `bdc_ndvi.toml`. The distance is computed for every cell and the figure masks those outside the
+  state; there are no seats outside Brazil in the file, so the distance is large in the north of Pará, near the border, where there are no seats.
 - `bdc_ndvi.toml` is the Brazil Data Cube NDVI on the same grid (dry season 2020), from the MODIS cube (`mod13q1-6.1`, 231 m): the
   Landsat cube (30 m) over the whole state does not fit, because the BDC adapter reads every scene of the period whole. Run it
   (`./run.sh run bdc_ndvi`, network) and `./run.sh plot sources` adds it as panel (c). The collection id and the asset name are those of the
@@ -116,7 +124,7 @@ farming in 19 %, water in 3 %, herbaceous and shrubby vegetation in 2 % and non-
 ![Pará: MapBiomas, PRODES and BDC NDVI](docs/figures/para_sources.png)
 
 ```bash
-cd cases/para && ./run.sh run sources && ./run.sh run bdc_ndvi && ./run.sh plot sources   # network; the BDC step is optional (panel c)
+cd cases/para && ./run.sh run sources && ./run.sh run bdc_ndvi && ./run.sh run seats && ./run.sh plot sources   # network; the BDC and seats steps are optional (panels c and d)
 ```
 
 ## MapBiomas over the whole of Brazil (`cases/brasil_5km/`)
