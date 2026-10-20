@@ -1,0 +1,30 @@
+{
+  "disscube": "0.6.0",
+  "pipeline": {
+    "file": "<repo>/cases/para/seats.toml",
+    "checksum": "sha256:d1111948107097986d3dec01494cfbc3d2e5b6fc2720f3a57f5451736b34adab",
+    "name": "Pará — distance to municipal seats"
+  },
+  "started": "2026-10-20T11:09:11+00:00",
+  "finished": "2026-10-20T11:09:15+00:00",
+  "grid": "para/5km",
+  "sources": [
+    {
+      "id": "seats",
+      "type": "file",
+      "file": "zip:///home/sergio/.cache/disscube/raw/ana/GEOFT_CIDADE_2016.zip",
+      "checksum": "sha256:0311f4267c4ea871b3e928bf8821ba03380a58595ff3e4cc5e77cf315f16c16a",
+      "time": null
+    }
+  ],
+  "derived": [
+    {
+      "target": "dist_seats",
+      "source": "seats",
+      "spec_hash": "17d1530e0862af09d1690aa5e34a2e2897ef6bcc647abe18d77197ec8d5d361a",
+      "times": [],
+      "file": "<repo>/cases/para/data/seats/store/derived/para/5km/global/17d1530e0862af09d1690aa5e34a2e2897ef6bcc647abe18d77197ec8d5d361a/dist_seats.zarr"
+    }
+  ],
+  "exported": "<repo>/cases/para/data/seats.tif"
+}

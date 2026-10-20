@@ -1,0 +1,48 @@
+pipeline  : seats.toml  (sha256:d11119481070…)
+grid      : para  5000 m, BDC Albers
+sources   : 1
+  - seats                    file
+variables : 1
+  - dist_seats               distance {'crs': 'EPSG:5880'} <- seats
+OK
+INFO disscube.models.grid: [grid] registered 'para/5km'  bbox(BDC Albers)=[4445000, 10225000, 5900000, 11625000]  bbox(geo)=lon[-59.14,-46.04] lat[-9.95,2.75]  size=280×291 cells  (5000 m pixels)
+INFO disscube.pipeline.runner: source seats (file)
+Downloading data from 'https://metadados.snirh.gov.br/geonetwork/srv/api/records/8db5549f-2b94-40f0-b968-6f940bad68fa/attachments/GEOFT_CIDADE_2016.zip' to file '/home/sergio/.cache/disscube/raw/ana/GEOFT_CIDADE_2016.zip'.
+INFO disscube.pipeline.runner: exported GeoTIFF to <repo>/cases/para/data/seats.tif (1 variables)
+pipeline  : seats.toml  (sha256:d11119481070…)
+grid      : para  5000 m, BDC Albers
+sources   : 1
+  - seats                    file
+variables : 1
+  - dist_seats               distance {'crs': 'EPSG:5880'} <- seats
+workspace : <repo>/cases/para/data/seats
+derived   : 1 products on para/5km
+exported  : <repo>/cases/para/data/seats.tif
+record    : <repo>/cases/para/data/seats/run.json
+	Command being timed: "bash ./run.sh run seats"
+	User time (seconds): 3.56
+	System time (seconds): 0.41
+	Percent of CPU this job got: 46%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:08.64
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 208452
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 109
+	Minor (reclaiming a frame) page faults: 53960
+	Voluntary context switches: 744
+	Involuntary context switches: 165
+	Swaps: 0
+	File system inputs: 254904
+	File system outputs: 1976
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+== band summary of the exported GeoTIFF (cells with data, mean, min, max; values as stored)
+291 x 280 cells, 1 bands, EPSG:10857
+dist_seats	cells 81480	mean 9.555e+04	min 87.31	max 4.558e+05

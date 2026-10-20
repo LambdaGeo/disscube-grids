@@ -1,24 +1,25 @@
 {
+  "disscube": "0.6.0",
   "pipeline": {
-    "file": "sources.toml",
+    "file": "<repo>/cases/para/sources.toml",
     "checksum": "sha256:7b8f4e688fc8c8f3354dd59276bd1ce40daa5638a4367aed24b0e5fcbd7d5b6f",
     "name": "Pará — MapBiomas land use and PRODES deforestation"
   },
-  "started": "2026-10-12T14:00:29+00:00",
-  "finished": "2026-10-12T14:06:12+00:00",
+  "started": "2026-10-20T10:59:34+00:00",
+  "finished": "2026-10-20T11:01:44+00:00",
   "grid": "para/5km",
   "sources": [
     {
       "id": "lulc_2024",
       "type": "mapbiomas",
-      "file": "data/sources/raw/lulc_2024.tif",
+      "file": "<repo>/cases/para/data/sources/raw/lulc_2024.tif",
       "checksum": "sha256:7efa3410847cc99eb5f3834a2c58b579076f3191866035bb4928c3eae87bf84f",
       "time": 2024
     },
     {
       "id": "prodes_2024",
       "type": "prodes",
-      "file": "data/sources/raw/prodes_2024.tif",
+      "file": "<repo>/cases/para/data/sources/raw/prodes_2024.tif",
       "checksum": "sha256:fab3016d04e24bc1b32544fc0da83e53bd7b2e5b99918af3ba618d5cf0e2d596",
       "time": 2024
     }
@@ -31,7 +32,7 @@
       "times": [
         2024
       ],
-      "file": "data/sources/store/derived/para/5km/global/0a94d046aea1c57ada64f73e0bc0f21e5b1427d69a2aa18665fa69a61d7efaea/l1_class.zarr"
+      "file": "<repo>/cases/para/data/sources/store/derived/para/5km/global/0a94d046aea1c57ada64f73e0bc0f21e5b1427d69a2aa18665fa69a61d7efaea/l1_class.zarr"
     },
     {
       "target": "prodes_class",
@@ -40,8 +41,8 @@
       "times": [
         2024
       ],
-      "file": "data/sources/store/derived/para/5km/global/4eb2c2d1affc3edb15508ba949264d8f87a6c7d5269538f81a2222d137f84987/prodes_class.zarr"
+      "file": "<repo>/cases/para/data/sources/store/derived/para/5km/global/4eb2c2d1affc3edb15508ba949264d8f87a6c7d5269538f81a2222d137f84987/prodes_class.zarr"
     }
   ],
-  "exported": "data/sources.tif"
+  "exported": "<repo>/cases/para/data/sources.tif"
 }

@@ -1,17 +1,18 @@
 {
+  "disscube": "0.6.0",
   "pipeline": {
-    "file": "bdc_ndvi.toml",
+    "file": "<repo>/cases/para/bdc_ndvi.toml",
     "checksum": "sha256:665166117e5bb01ecc91e36c6efab08533e24231649f4f285dc8f459bf83a303",
     "name": "Pará — BDC MODIS NDVI, dry season 2020"
   },
-  "started": "2026-10-12T14:06:14+00:00",
-  "finished": "2026-10-12T14:09:00+00:00",
+  "started": "2026-10-20T11:01:52+00:00",
+  "finished": "2026-10-20T11:09:02+00:00",
   "grid": "para/5km",
   "sources": [
     {
       "id": "ndvi",
       "type": "bdc",
-      "file": "data/bdc_ndvi/raw/ndvi.tif",
+      "file": "<repo>/cases/para/data/bdc_ndvi/raw/ndvi.tif",
       "checksum": "sha256:fe558eb6c9ef5e940f77c80f83d576ec49e61d9dbe78dfba5360256618a1e267",
       "time": 2020
     }
@@ -24,8 +25,8 @@
       "times": [
         2020
       ],
-      "file": "data/bdc_ndvi/store/derived/para/5km/global/230e4879f7c5a094a5798a674ac1c5400a4c0862c1a095fd4d37772b5c25aef6/ndvi_mean.zarr"
+      "file": "<repo>/cases/para/data/bdc_ndvi/store/derived/para/5km/global/230e4879f7c5a094a5798a674ac1c5400a4c0862c1a095fd4d37772b5c25aef6/ndvi_mean.zarr"
     }
   ],
-  "exported": "data/bdc_ndvi.tif"
+  "exported": "<repo>/cases/para/data/bdc_ndvi.tif"
 }

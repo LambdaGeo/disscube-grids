@@ -11,135 +11,8 @@ INFO disscube.models.grid: [grid] registered 'para/5km'  bbox(BDC Albers)=[44450
 INFO disscube.pipeline.runner: source lulc_2024 (mapbiomas)
 INFO disscube.sources._raster: registered lulc_2024 (sha256:7efa3410) — provenance in <repo>/cases/para/data/sources/raw/lulc_2024.provenance.json
 INFO disscube.pipeline.runner: source prodes_2024 (prodes)
+INFO disscube.sources.prodes: downloading https://terrabrasilis.dpi.inpe.br/download/dataset/legal-amz-prodes/raster/prodes_amazonia_legal_2025_v20260408.zip
 INFO disscube.sources._raster: registered prodes_2024 (sha256:fab3016d) — provenance in <repo>/cases/para/data/sources/raw/prodes_2024.provenance.json
-INFO disscube.client.cube_client: block 1/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 2/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 3/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 4/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 5/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 6/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 7/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 8/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 9/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 10/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 11/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 12/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 13/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 14/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 15/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 16/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 17/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 18/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 19/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 20/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 21/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 22/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 23/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 24/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 25/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 26/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 27/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 28/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 29/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 30/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 31/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 32/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 33/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 34/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 35/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 36/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 37/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 38/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 39/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 40/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 41/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 42/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 43/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 44/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 45/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 46/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 47/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 48/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 49/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 50/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 51/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 52/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 53/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 54/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 55/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 56/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 57/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 58/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 59/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 60/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 61/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 62/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 63/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 64/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 1/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 2/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 3/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 4/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 5/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 6/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 7/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 8/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 9/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 10/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 11/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 12/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 13/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 14/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 15/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 16/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 17/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 18/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 19/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 20/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 21/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 22/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 23/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 24/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 25/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 26/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 27/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 28/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 29/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 30/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 31/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 32/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 33/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 34/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 35/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 36/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 37/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 38/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 39/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 40/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 41/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 42/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 43/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 44/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 45/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 46/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 47/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 48/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 49/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 50/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 51/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 52/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 53/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 54/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 55/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 56/64 of grid para/5km (35 rows x 32 cols)
-INFO disscube.client.cube_client: block 57/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 58/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 59/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 60/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 61/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 62/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 63/64 of grid para/5km (35 rows x 37 cols)
-INFO disscube.client.cube_client: block 64/64 of grid para/5km (35 rows x 32 cols)
 INFO disscube.pipeline.runner: exported GeoTIFF to <repo>/cases/para/data/sources.tif (2 variables)
 pipeline  : sources.toml  (sha256:7b8f4e688fc8…)
 grid      : para  5000 m, BDC Albers
@@ -153,26 +26,31 @@ workspace : <repo>/cases/para/data/sources
 derived   : 2 products on para/5km
 exported  : <repo>/cases/para/data/sources.tif
 record    : <repo>/cases/para/data/sources/run.json
-	Command being timed: "./run.sh run sources"
-	User time (seconds): 243.10
-	System time (seconds): 9.46
-	Percent of CPU this job got: 73%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 5:44.17
+	Command being timed: "bash ./run.sh run sources"
+	User time (seconds): 44.97
+	System time (seconds): 2.96
+	Percent of CPU this job got: 36%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:12.05
 	Average shared text size (kbytes): 0
 	Average unshared data size (kbytes): 0
 	Average stack size (kbytes): 0
 	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 2022160
+	Maximum resident set size (kbytes): 1130568
 	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 1157703
-	Voluntary context switches: 8168
-	Involuntary context switches: 15880
+	Major (requiring I/O) page faults: 5
+	Minor (reclaiming a frame) page faults: 427856
+	Voluntary context switches: 8548
+	Involuntary context switches: 1673
 	Swaps: 0
-	File system inputs: 8
-	File system outputs: 240104
+	File system inputs: 11608
+	File system outputs: 897024
 	Socket messages sent: 0
 	Socket messages received: 0
 	Signals delivered: 0
 	Page size (bytes): 4096
 	Exit status: 0
+
+== band summary of the exported GeoTIFF (cells with data, mean, min, max; values as stored)
+291 x 280 cells, 2 bands, EPSG:10857
+l1_class_2024	cells 71358	mean 1.564	min 1	max 5
+prodes_class_2024	cells 71310	mean 1.574	min 1	max 4
