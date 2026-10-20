@@ -7,7 +7,7 @@ variables : 1
 OK
 INFO disscube.models.grid: [grid] registered 'para/5km'  bbox(BDC Albers)=[4445000, 10225000, 5900000, 11625000]  bbox(geo)=lon[-59.14,-46.04] lat[-9.95,2.75]  size=280×291 cells  (5000 m pixels)
 INFO disscube.pipeline.runner: source seats (file)
-Downloading data from 'https://metadados.snirh.gov.br/geonetwork/srv/api/records/8db5549f-2b94-40f0-b968-6f940bad68fa/attachments/GEOFT_CIDADE_2016.zip' to file '/home/sergio/.cache/disscube/raw/ana/GEOFT_CIDADE_2016.zip'.
+Downloading data from 'https://metadados.snirh.gov.br/geonetwork/srv/api/records/8db5549f-2b94-40f0-b968-6f940bad68fa/attachments/GEOFT_CIDADE_2016.zip' to file '<cache>/raw/ana/GEOFT_CIDADE_2016.zip'.
 INFO disscube.pipeline.runner: exported GeoTIFF to <repo>/cases/para/data/seats.tif (1 variables)
 pipeline  : seats.toml  (sha256:d11119481070…)
 grid      : para  5000 m, BDC Albers
