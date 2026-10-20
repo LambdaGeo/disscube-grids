@@ -98,7 +98,7 @@ def main():
     ap.add_argument("--year", default="2024")
     ap.add_argument("--out", default=str(HERE.parent.parent / "docs" / "figures" / "para_sources.png"))
     ap.add_argument("--state-zip", default=None, help="a local copy of the state boundary (IBGE shapefile in a zip); default: download it")
-    ap.add_argument("--title", default=None, help="title above the panels (none by default: the caption of the article says it)")
+    ap.add_argument("--title", default=None, help="title above the panels (none by default: the caption says it)")
     a = ap.parse_args()
     a.state_zip = state_boundary(a.state_zip)
 

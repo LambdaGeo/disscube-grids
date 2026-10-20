@@ -4,11 +4,11 @@
 > mask of the input raster still come from the open-lucc-workflow pipeline (`data/raw_cellspace_bdc_5k.tif`); `replace_bands.py` puts the
 > land-use bands of the DisSCube output into it. The whole country ran on 12 Oct 2026 (see "The whole country").
 
-Manuscript, section 5.4.3. The main runs use the land-cover layer of the LuccME-BR database (NetCDF, pixels of about
+The main runs of the [open-lucc-workflow](https://github.com/LambdaGeo/open-lucc-workflow) use the land-cover layer of the LuccME-BR database (NetCDF, pixels of about
 100 km²). At 5.28 km the land-use bands therefore carry no information finer than that source. This test builds the
 5.28 km grid with MapBiomas (collection 11, 30 m, CC-BY-4.0, year 2000, the year of the main layer) instead,
 to exercise the ingestion of another open source at national scale and to measure its cost. **It generates the
-grid only. The model is not run on it and no result of section 5.4 depends on it.**
+grid only. The model is not run on it and no result of the open-lucc-workflow depends on it.**
 
 ## Why it needs a DisSCube that reads by blocks
 

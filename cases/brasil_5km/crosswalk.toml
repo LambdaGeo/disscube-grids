@@ -1,6 +1,6 @@
 # Declared correspondence between MapBiomas classes and the seven classes of the verification model.
 #
-# This is OUR choice, made to exercise the chain with another land-use source (manuscript, section 5.4.3).
+# This is OUR choice, made to exercise the chain with another land-use source (open-lucc-workflow).
 # It is not the correspondence used by LuccME-BR, and the result is not a LuccME-BR initial state.
 # [TO CONFIRM] every code against the legend of the collection in use (see LEGEND_URL in
 # disscube.sources.mapbiomas); codes that are not listed here go to `others`, and code 0 (not observed) is nodata.
