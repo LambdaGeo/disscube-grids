@@ -1,6 +1,6 @@
 # disscube-grids
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23368071.svg)](https://doi.org/10.5281/zenodo.23368071)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23502247.svg)](https://doi.org/10.5281/zenodo.23502247)
 
 How to build gridded variables from open data with
 [DisSCube](https://github.com/DisSModel/disscube): one study area per folder in `cases/`, one TOML file per
@@ -184,6 +184,6 @@ were run again on 14 Oct 2026 with the release 0.6.0 (`scripts/record_run.sh`; t
 
 ## Cite
 
-Costa, S. S. (2026). *disscube-grids: building gridded variables from open data with DisSCube* (Version v1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23368071
+Costa, S. S. (2026). *disscube-grids: building gridded variables from open data with DisSCube* (Version v1.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23502247
 
-The DOI above is the one of version 1.0.0; the DOI of version 1.1.0 is added here after the release is archived. The Zenodo record also lists the concept DOI, which always points to the latest version. Cite DisSCube itself (10.5281/zenodo.23365403) and the data providers as well (see [THIRD_PARTY.md](THIRD_PARTY.md)).
+The DOI above is the one of version 1.1.0 (version 1.0.0: https://doi.org/10.5281/zenodo.23368071). The Zenodo record also lists the concept DOI, which always points to the latest version. Cite DisSCube itself (10.5281/zenodo.23365403) and the data providers as well (see [THIRD_PARTY.md](THIRD_PARTY.md)).
