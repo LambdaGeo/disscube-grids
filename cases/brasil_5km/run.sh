@@ -3,7 +3,7 @@
 #   validate  checks mapbiomas.toml
 #   run       builds the 5.28 km grid with MapBiomas (network, whole Brazil; hours) -> data/mapbiomas_5k.tif
 #   plot      draws four of the seven classes with `disscube plot` -> ../../docs/figures/brasil_mapbiomas.png (needs matplotlib)
-#   bands     puts the land-use bands into the base cell space of the main run
+#   bands     puts the land-use bands into the base input raster of the main run
 #             (needs data/raw_cellspace_bdc_5k.tif from open-lucc-workflow and scripts/ of that repository on PATH or in ./scripts)
 #   all       run, then bands
 # Leave it running: nohup /usr/bin/time -v ./run.sh run > run.log 2>&1 &

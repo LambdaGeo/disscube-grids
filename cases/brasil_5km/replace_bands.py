@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Put the land-use bands of a DisSCube output into a cell space, keeping its drivers and its mask.
+"""Put the land-use bands of a DisSCube output into an input raster, keeping its drivers and its mask.
 
     python replace_bands.py --base data/raw_cellspace_bdc_5k.tif --bands data/mapbiomas_5k.tif \
         --out data/raw_cellspace_bdc_5k_mapbiomas.tif

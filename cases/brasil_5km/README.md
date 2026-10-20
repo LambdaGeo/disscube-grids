@@ -1,12 +1,12 @@
 # Test with another land-use source: MapBiomas (grid only, not part of the main result)
 
 > **Status in this repository.** The 5.28 km grid and the seven land-use shares are one TOML here, `mapbiomas.toml`. The drivers and the
-> mask of the cell space still come from the open-lucc-workflow pipeline (`data/raw_cellspace_bdc_5k.tif`); `replace_bands.py` puts the
+> mask of the input raster still come from the open-lucc-workflow pipeline (`data/raw_cellspace_bdc_5k.tif`); `replace_bands.py` puts the
 > land-use bands of the DisSCube output into it. The whole country ran on 12 Oct 2026 (see "The whole country").
 
 Manuscript, section 5.4.3. The main runs use the land-cover layer of the LuccME-BR database (NetCDF, pixels of about
 100 km²). At 5.28 km the land-use bands therefore carry no information finer than that source. This test builds the
-5.28 km cell space with MapBiomas (collection 11, 30 m, CC-BY-4.0, year 2000, the year of the main layer) instead,
+5.28 km grid with MapBiomas (collection 11, 30 m, CC-BY-4.0, year 2000, the year of the main layer) instead,
 to exercise the ingestion of another open source at national scale and to measure its cost. **It generates the
 grid only. The model is not run on it and no result of section 5.4 depends on it.**
 
@@ -23,7 +23,7 @@ pip install -r requirements.txt            # DisSCube 0.6.0
 disscube validate mapbiomas.toml
 disscube run mapbiomas.toml --workspace data/mapbiomas --output data/mapbiomas_5k.tif     # network
 # a quick try on two tiles of Pará: bbox = [5280000.0, 10771200.0, 5491200.0, 10876800.0] in a copy of the file
-# then, with the cell space of the main run:
+# then, with the input raster of the main run:
 python replace_bands.py --base data/raw_cellspace_bdc_5k.tif --bands data/mapbiomas_5k.tif \
     --out data/raw_cellspace_bdc_5k_mapbiomas.tif
 python scripts/complete_cellspace.py data/raw_cellspace_bdc_5k_mapbiomas.tif data/cellspace_bdc_5k_mapbiomas.tif
@@ -39,8 +39,8 @@ each one reads and aligns the source again: the whole country took 1 h 43 min 55
   `mapbiomas.toml` (`class_code` lists; `crosswalk.toml` has the same lists). It is not the one of LuccME-BR, and the legend of
   collection 11 must be checked ([TO CONFIRM] in the file).
 - `others` lists every other code of the legend (10, 14, 22–27, 29–33, 49, 50, 75, 91), so the seven shares add to 1; code 0 (not
-  observed) is nodata, and a cell with no observed pixel is left empty and removed by `complete_cellspace.py`, as in the main cell space.
-- The drivers and the mask are those of the base cell space.
+  observed) is nodata, and a cell with no observed pixel is left empty and removed by `complete_cellspace.py`, as in the main input raster.
+- The drivers and the mask are those of the base input raster.
 
 ## Pilot on the published files (author's machine, 10 Oct 2026)
 
@@ -53,7 +53,7 @@ would take about 7 hours; `--jobs` runs tiles at the same time.
 
 On the two tiles of the pilot (25,10 and 26,10, real MapBiomas 2000) the single TOML and the tile script agree: same cells, same empty
 cells, shares add to 1 in all 800 cells, largest difference 0.24 % of a cell (the edge of the strips and tiles). The TOML took 11 s for the
-two tiles, the script 44 s; `replace_bands.py` on a base cell space gives the same file as the script. Not yet done here: the class codes against the legend of collection 11 and the comparison of class areas with the NetCDF layer (the whole country is below).
+two tiles, the script 44 s; `replace_bands.py` on a base input raster gives the same file as the script. Not yet done here: the class codes against the legend of collection 11 and the comparison of class areas with the NetCDF layer (the whole country is below).
 
 ## The whole country (12 Oct 2026)
 
