@@ -12,7 +12,7 @@
     {
       "id": "seats",
       "type": "file",
-      "file": "zip:///home/sergio/.cache/disscube/raw/ana/GEOFT_CIDADE_2016.zip",
+      "file": "zip://<cache>/raw/ana/GEOFT_CIDADE_2016.zip",
       "checksum": "sha256:0311f4267c4ea871b3e928bf8821ba03380a58595ff3e4cc5e77cf315f16c16a",
       "time": null
     }

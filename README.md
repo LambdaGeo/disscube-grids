@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23368071.svg)](https://doi.org/10.5281/zenodo.23368071)
 
-How to build gridded variables ("cellular spaces") from open data with
+How to build gridded variables from open data with
 [DisSCube](https://github.com/DisSModel/disscube): one study area per folder in `cases/`, one TOML file per
 grid, a few lines of shell to run it, and the maps it produces.
 
@@ -14,9 +14,9 @@ except `para`, whose figure of four sources side by side is drawn by `cases/para
 | Area | Pipeline | Sources | Grid | Status |
 |---|---|---|---|---|
 | `cases/ilha_maranhao/` | `bdc_mapbiomas.toml` | BDC Landsat indices (STAC), MapBiomas, PRODES | 300 m, 58 × 59 cells | **ran here** (14 Oct 2026, DisSCube 0.6.0): 55 s, 0.24 GB, most of it waiting for the BDC STAC |
-| `cases/para/` | `sources.toml` | MapBiomas (collection 11, level-1 land use), PRODES | 5 km, whole state, 280 × 291 cells | **ran here** (12 Oct 2026, DisSCube with block reading, see below): 5 min 44 s, 2.1 GB |
-| `cases/para/` | `bdc_ndvi.toml` | BDC MODIS NDVI (STAC, 231 m) | same | **ran here** (12 Oct 2026): 2 min 48 s, 4.1 GB; panel (c) of the figure |
-| `cases/para/` | `seats.toml` | Municipal seats (points, IBGE BC250 2016 through the ANA catalogue), the source of `e_cities` in the Open LUCC workflow | same | checked on a copy of the file (19 Oct 2026, DisSCube 0.6.0): equal to an independent nearest-point calculation, largest difference 3 × 10⁻⁸ m; panel (d) of the figure |
+| `cases/para/` | `sources.toml` | MapBiomas (collection 11, level-1 land use), PRODES | 5 km, whole state, 280 × 291 cells | **ran here** (20 Oct 2026, DisSCube 0.6.0): 2 min 12 s, 1.2 GB |
+| `cases/para/` | `bdc_ndvi.toml` | BDC MODIS NDVI (STAC, 231 m) | same | **ran here** (20 Oct 2026, DisSCube 0.6.0): 7 min 15 s, 4.2 GB, mostly waiting for the network; panel (c) of the figure |
+| `cases/para/` | `seats.toml` | Municipal seats (points, IBGE BC250 2016 through the ANA catalogue), the source of `e_cities` in the Open LUCC workflow | same | **ran here** (20 Oct 2026, DisSCube 0.6.0): 9 s, 0.21 GB; equal to an independent nearest-point calculation (checked on 19 Oct 2026), largest difference 3 × 10⁻⁸ m; panel (d) of the figure |
 | `cases/br163/` | `prodes.toml` | PRODES (Legal Amazon) | 500 m, 94 × 86 cells | **ran here** (14 Oct 2026, DisSCube 0.6.0): 4 s, 0.33 GB |
 | `cases/br163/` | `bdc_mapbiomas.toml` | BDC Landsat NDVI (STAC), MapBiomas | same | **ran here** (14 Oct 2026, DisSCube 0.6.0): 51 s, 0.57 GB, most of it waiting for the BDC STAC |
 | `cases/amazonia_legal/` | `prodes.toml` | PRODES (Legal Amazon) | 5.28 km, whole region, 680 × 520 cells | single TOML **ran here** for the whole region (12 Oct 2026): 27 min 13 s, 2.9 GB; on 3 × 3 tiles it agrees with the earlier tile script |
@@ -115,12 +115,9 @@ needs a DisSCube that reads and aligns by blocks (0.6.0 or later,
 - `bdc_ndvi.toml` is the Brazil Data Cube NDVI on the same grid (dry season 2020), from the MODIS cube (`mod13q1-6.1`, 231 m): the
   Landsat cube (30 m) over the whole state does not fit, because the BDC adapter reads every scene of the period whole. Run it
   (`./run.sh run bdc_ndvi`, network) and `./run.sh plot sources` adds it as panel (c). The collection id and the asset name are those of the
-  [BDC STAC catalog](https://data.inpe.br/bdc/stac/v1/collections/mod13q1-6.1); both ran on 12 Oct 2026.
+  [BDC STAC catalog](https://data.inpe.br/bdc/stac/v1/collections/mod13q1-6.1).
 
-**Runs of 12 Oct 2026** (DisSCube commit `9aa7515`, the code that became 0.6.0; one CPU core): `sources` took 5 min 44 s with a peak memory of 2.1 GB
-(two passes of 64 blocks of 35 × 37 cells); `bdc_ndvi` took 2 min 48 s with a peak memory of 4.1 GB, mostly waiting for the network (19 % of one core): it has no block
-stage in its log, and its peak is the highest of the runs on this page. By cell, forest is the MapBiomas class that covers most of the cell in 75 % of the cells of the state,
-farming in 19 %, water in 3 %, herbaceous and shrubby vegetation in 2 % and non-vegetated area in 0.1 %. GeoTIFF SHA-256: `sources.tif` `99fabb74…8169d0`, `bdc_ndvi.tif` `e30686cc…e510d2`.
+**Runs of 20 Oct 2026** (DisSCube 0.6.0 release, one CPU core; the records are `run_sources`, `run_bdc_ndvi` and `run_seats` in the case folder, with the SHA-256 of every source): `sources` took 2 min 12 s with a peak memory of 1.2 GB (36 % of one core); `bdc_ndvi` took 7 min 15 s with a peak memory of 4.2 GB, mostly waiting for the network (7 % of one core): its peak is the highest of the runs on this page; `seats` took 9 s with 0.21 GB. The first runs of the state, of 12 Oct 2026 (DisSCube commit `9aa7515`, the code that became 0.6.0), took 5 min 44 s and 2.1 GB for `sources` and 2 min 48 s and 4.1 GB for `bdc_ndvi`; the cache, the network and the code were not the same in the two runs. By cell, forest is the MapBiomas class that covers most of the cell in 75 % of the cells of the state, farming in 19 %, water in 3 %, herbaceous and shrubby vegetation in 2 % and non-vegetated area in 0.1 %.
 ![Pará: MapBiomas, PRODES and BDC NDVI](docs/figures/para_sources.png)
 
 ```bash
@@ -170,10 +167,10 @@ copied to `docs/figures/`).
 
 ## Versions
 
-`requirements.txt` pins the release DisSCube 0.6.0 (10.5281/zenodo.23365403). The runs of the three large cases (Legal Amazon, Pará, Brazil) were made on 12 Oct 2026, before
-the release, on commits of the branch that became 0.6.0: `9aa7515` (Legal Amazon, Pará) and `f2feb95` (Brazil). Compared with the release, the code differs in the repair of invalid
+`requirements.txt` pins the release DisSCube 0.6.0 (10.5281/zenodo.23365403). The runs of two large cases (Legal Amazon, Brazil) were made on 12 Oct 2026, before
+the release, on commits of the branch that became 0.6.0: `9aa7515` (Legal Amazon) and `f2feb95` (Brazil). The three pipelines of the state of Pará were run again on 20 Oct 2026 with the release. Compared with the release, the code differs in the repair of invalid
 polygons of vector sources, the closing of the source files, the DisSCube version written to `run.json` and, for `f2feb95`, the `disscube plot` command; `9aa7515` already
-has the PRODES fix of the yearly classes. None of these three cases reads a vector source, so none of the repairs applies to them. The small cases (Ilha do Maranhão, BR-163)
+has the PRODES fix of the yearly classes. Neither of these two cases reads a vector source, so none of the repairs applies to them. The small cases (Ilha do Maranhão, BR-163)
 were run again on 14 Oct 2026 with the release 0.6.0 (`scripts/record_run.sh`; the records are `run_<pipeline>.log`, `run_<pipeline>.json` and `env.txt` in the case folders); their first runs, of 10 and 11 Oct, used 0.5.0. A run made with 0.6.0 records `"disscube": "0.6.0"` in its `run.json`; the records of the earlier runs do not have that field, and `env.txt` has the commit.
 
 ## Notes
@@ -189,4 +186,4 @@ were run again on 14 Oct 2026 with the release 0.6.0 (`scripts/record_run.sh`; t
 
 Costa, S. S. (2026). *disscube-grids: building gridded variables from open data with DisSCube* (Version v1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23368071
 
-The DOI above is the one of version 1.0.0; the Zenodo record also lists the concept DOI, which always points to the latest version. Cite DisSCube itself (10.5281/zenodo.23365403) and the data providers as well (see [THIRD_PARTY.md](THIRD_PARTY.md)).
+The DOI above is the one of version 1.0.0; the DOI of version 1.1.0 is added here after the release is archived. The Zenodo record also lists the concept DOI, which always points to the latest version. Cite DisSCube itself (10.5281/zenodo.23365403) and the data providers as well (see [THIRD_PARTY.md](THIRD_PARTY.md)).
