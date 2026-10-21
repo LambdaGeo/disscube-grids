@@ -1,7 +1,7 @@
 # disscube-grids / ilha_maranhao — Brazil Data Cube + MapBiomas on one 300 m grid
 #
 # Ilha do Maranhão (São Luís, MA): Landsat spectral indices from the Brazil Data Cube (STAC), MapBiomas land
-# use and PRODES, aggregated onto the same grid, which is snapped to the BDC Albers grid.
+# use and PRODES, aggregated onto the same grid, which is in BDC Albers, with the extent aligned to the cell size.
 # Needs network and the `bdc` extra (pystac-client, fiona): pip install -r requirements.txt
 #
 # PRODES is here to show that a third source drops into the same file, but the island lies at the edge of the
@@ -16,7 +16,7 @@ name = "Ilha do Maranhão — BDC Landsat drivers and MapBiomas land use"
 
 [grid]
 name = "ilha_do_maranhao"
-bbox = [-44.35, -2.62, -44.20, -2.47]      # WGS84; the grid itself is BDC Albers, snapped
+bbox = [-44.35, -2.62, -44.20, -2.47]      # WGS84; the grid itself is BDC Albers, extent aligned to the cell size
 resolution = 300
 
 # ── Brazil Data Cube: Landsat 16-day composites, dry season 2020 ────────────

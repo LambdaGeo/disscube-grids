@@ -6,8 +6,8 @@ How to build gridded variables from open data with
 [DisSCube](https://github.com/DisSModel/disscube): one study area per folder in `cases/`, one TOML file per
 grid, a few lines of shell to run it, and the maps it produces.
 
-The point is the **grid construction**: each pipeline file states the grid (snapped to the
-[Brazil Data Cube](https://brazil-data-cube.github.io/) Albers mesh), the sources and how each
+The point is the **grid construction**: each pipeline file states the grid (in the
+[Brazil Data Cube](https://brazil-data-cube.github.io/) Albers projection, with the extent aligned to the cell size), the sources and how each
 variable is derived. There is no case-specific code in the pipelines. The maps are drawn with `disscube plot` (`amazonia_legal`, `brasil_5km`, `ilha_maranhao`, `br163`),
 except `para`, whose figure of four sources side by side is drawn by `cases/para/figure_sources.py`.
 
@@ -24,7 +24,7 @@ except `para`, whose figure of four sources side by side is drawn by `cases/para
 
 ## First results (Ilha do Maranhão, 14 Oct 2026)
 
-MapBiomas (collection 11) on the 300 m BDC-snapped grid: 3,083 of 3,422 cells have data; urban share
+MapBiomas (collection 11) on the 300 m grid in BDC Albers: 3,083 of 3,422 cells have data; urban share
 41.4 % (2000) → 47.5 % (2020), forest 22.8 % → 19.4 %, mangrove 4.1 % → 4.5 %, the same figures
 as the earlier run in `disscube-recipes` and the run of 10 Oct 2026 (DisSCube 0.5.0). The whole file (BDC, MapBiomas and PRODES) took 54.7 s with a peak memory of 0.24 GB on 14 Oct 2026
 (DisSCube 0.6.0; 7 s of CPU, the rest is waiting for the BDC STAC). The Landsat indices of the BDC (dry season 2020) cover all 3,422 cells: NDVI mean 0.32 (−0.48 to 0.86) and MNDWI mean −0.27 (−0.59 to 0.69).
@@ -72,8 +72,7 @@ never closed, is fixed in 0.6.0.
 
 ### PRODES over the whole Legal Amazon (`cases/amazonia_legal/`)
 
-One pipeline file, `prodes.toml`, for the whole region: PRODES (2008 and 2024) on the BDC Albers mesh, 5.28 km cells (680 × 520, the
-cells of the BDC_SM tiles). The PRODES raster has 9.7 billion pixels, so it needs a DisSCube that reads and aligns by blocks (0.6.0 or later,
+One pipeline file, `prodes.toml`, for the whole region: PRODES (2008 and 2024) in the BDC Albers projection, 5.28 km cells (680 × 520), with the extent aligned to the cell size; these are not the cells of the BDC_SM tiles, to which only the grids of the Open LUCC workflow are fitted. The PRODES raster has 9.7 billion pixels, so it needs a DisSCube that reads and aligns by blocks (0.6.0 or later,
 [DisSModel/disscube](https://github.com/DisSModel/disscube)); 0.5.0 stops for lack of memory. Bands: `prodes_deforested_pct_<year>`, `prodes_forest_pct_<year>`.
 `./run.sh plot` draws the map with `disscube plot` (`docs/figures/amazonia_prodes.png`), without a script of its own. This replaces the tile script that ran the same pipeline 884 times
 (`build_prodes_amazonia.py`); on a window of 3 × 3 tiles the two agree to 0.4 % of a cell at most.
@@ -90,8 +89,8 @@ cd cases/amazonia_legal && ./run.sh all          # validate, run (network), expo
 
 ## The state of Pará (`cases/para/`)
 
-One pipeline file, `sources.toml`, for the whole state: MapBiomas 2024 (30 m) and PRODES 2024, on a 5 km grid snapped to the BDC
-Albers mesh. Pará lies entirely inside the Legal Amazon, so PRODES covers all of it. Each window is about 2.2 billion pixels, so it
+One pipeline file, `sources.toml`, for the whole state: MapBiomas 2024 (30 m) and PRODES 2024, on a 5 km grid in the BDC
+Albers projection, with the extent aligned to the cell size. Pará lies entirely inside the Legal Amazon, so PRODES covers all of it. Each window is about 2.2 billion pixels, so it
 needs a DisSCube that reads and aligns by blocks (0.6.0 or later,
 [DisSModel/disscube](https://github.com/DisSModel/disscube)). 0.5.0 stops for lack of memory; the same file on the Acre (430 million pixels, 1 km) ran with 1.3 GB.
 

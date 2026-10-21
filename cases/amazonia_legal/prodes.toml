@@ -2,8 +2,8 @@
 #
 # The PRODES raster of the Legal Amazon has 86,679 x 111,508 pixels (9.7 billion). It needs a DisSCube that reads and
 # aligns by blocks (DisSCube 0.6.0 or later);
-# DisSCube 0.5.0 stops for lack of memory. The grid is the BDC Albers mesh (EPSG:10857) in 105.6 km tiles of
-# 20 x 20 cells, 34 x 26 tiles, so the cells are those of the BDC_SM tiles. Cells with no PRODES data come out empty.
+# DisSCube 0.5.0 stops for lack of memory. The grid is in BDC Albers (EPSG:10857), 680 x 520 cells of 5.28 km with the
+# extent aligned to the cell size; they are not the cells of the BDC_SM tiles. Cells with no PRODES data come out empty.
 #
 #     disscube validate prodes.toml
 #     disscube run prodes.toml --workspace data/prodes --output data/prodes.tif

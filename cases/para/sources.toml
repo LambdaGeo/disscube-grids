@@ -2,7 +2,7 @@
 #
 # MapBiomas (30 m) and PRODES (30 m; the whole state of Pará lies inside the Legal Amazon, so both cover it)
 # are read, a block of rows at a time, from their published files and
-# aggregated onto the same grid, which is snapped to the BDC Albers grid. Needs network (MapBiomas is read
+# aggregated onto the same grid, which is in BDC Albers, with the extent aligned to the cell size. Needs network (MapBiomas is read
 # remotely; PRODES is downloaded once, about 130 MB, into the DisSCube cache).
 #
 #     disscube validate sources.toml
@@ -15,7 +15,7 @@ name = "Pará — MapBiomas land use and PRODES deforestation"
 
 [grid]
 name = "para"
-bbox = [-58.90, -9.85, -46.06, 2.64]        # WGS84 envelope of the state (IBGE, 2025); the grid is BDC Albers, snapped
+bbox = [-58.90, -9.85, -46.06, 2.64]        # WGS84 envelope of the state (IBGE, 2025); the grid is BDC Albers, extent aligned to the cell size
 resolution = 5000
 
 # ── MapBiomas land use (30 m) ───────────────────────────────────────────────

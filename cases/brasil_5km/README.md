@@ -13,8 +13,7 @@ grid only. The model is not run on it and no result of the open-lucc-workflow de
 ## Why it needs a DisSCube that reads by blocks
 
 MapBiomas at 30 m over Brazil is 22.6 billion pixels (154,470 × 146,501; about 90 GB as float32). DisSCube 0.5.0 reads the whole window of a
-source into memory, so it does not fit; the first version of this test ran DisSCube tile by tile from a script. With DisSCube 0.6.0 ([DisSModel/disscube](https://github.com/DisSModel/disscube)) one `disscube run` reads, aligns and aggregates by strips of grid rows, and the script is gone. The grid is the BDC_SM mesh in
-tiles of 105.6 km (45 × 52 = 2,340 tiles of 20 × 20 cells, 900 × 1,040 cells).
+source into memory, so it does not fit; the first version of this test ran DisSCube tile by tile from a script. With DisSCube 0.6.0 ([DisSModel/disscube](https://github.com/DisSModel/disscube)) one `disscube run` reads, aligns and aggregates by strips of grid rows, and the script is gone. The grid has 900 × 1,040 cells of 5.28 km in the BDC Albers projection, with the extent aligned to the cell size (not the cells of the BDC_SM tiles); the script processed it in 45 × 52 = 2,340 blocks of 20 × 20 cells (105.6 km).
 
 ## Steps
 
