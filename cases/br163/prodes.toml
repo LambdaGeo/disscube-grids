@@ -1,7 +1,7 @@
 # disscube-grids / br163 — PRODES deforestation along the BR-163 (Pará)
 #
-# The area of the LuccME "Lab15" cellular space (cs_moju), along the BR-163 near Mojuí dos Campos,
-# south of Santarém, Pará. PRODES (Legal Amazon) is aggregated onto a 500 m grid in BDC Albers, with the
+# The bounding box of the LuccME "Lab15" cellular space (cs_moju): the area around the PA Moju I and II
+# land-reform settlement, south of Santarém and east of the BR-163, Pará (Coelho, 2009). PRODES (Legal Amazon) is aggregated onto a 500 m grid in BDC Albers, with the
 # extent aligned to the cell size, giving the share of each cell that is forest or deforested (cumulative) at the
 # end of 2008, 2016 and 2024.
 #

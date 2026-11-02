@@ -1,7 +1,7 @@
 # disscube-grids / br163 — Brazil Data Cube + MapBiomas on the same 500 m grid as prodes.toml
 #
-# Same area and grid as prodes.toml (LuccME Lab15 cellular space, cs_moju, BR-163 near Mojuí dos
-# Campos, Pará), so that the three open sources can be compared cell by cell: Landsat indices from the
+# Same area and grid as prodes.toml (bounding box of the LuccME Lab15 cellular space, cs_moju: the area
+# around the PA Moju settlement, south of Santarém, Pará), so that the three open sources can be compared cell by cell: Landsat indices from the
 # Brazil Data Cube (STAC), MapBiomas land use (30 m classes) and PRODES (prodes.toml).
 # Needs network and the `bdc` extra (pystac-client, fiona): pip install -r requirements.txt
 #
