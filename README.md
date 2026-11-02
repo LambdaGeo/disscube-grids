@@ -42,7 +42,7 @@ the PRODES domain edge (the island lies at the limit of the Legal Amazon) and no
 The PRODES source is kept in `bdc_mapbiomas.toml` (variables prefixed `prodes_`) as the record of this test, so the island is
 built from three sources in one file; PRODES is shown as a useful map on `cases/br163/` instead.
 
-PRODES on the BR-163 near Mojuí dos Campos (500 m grid, 94 × 86 cells, all 8,084 cells with data,
+PRODES around the PA Moju settlement, south of Santarém and east of the BR-163 (bounding box of the LuccME lab15 cellular space; 500 m grid, 94 × 86 cells, all 8,084 cells with data,
 3.8 s after the download, peak memory 0.33 GB, DisSCube 0.6.0, 14 Oct 2026): mean deforested share 14.5 % (2008) → 19.0 % (2016) → 32.5 % (2024); forest
 85.2 % → 80.7 % → 67.2 %. The maps show the fishbone pattern of the road's side roads.
 The run of 10 Oct 2026 (DisSCube 0.5.0) gave 7,997 cells with data and 18.1 % → 20.1 % → 20.5 % deforested: the PRODES reader of 0.5.0 dropped the yearly classes d2010 to d2025
